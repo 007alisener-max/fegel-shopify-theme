@@ -45,11 +45,11 @@ Temadan bağımsız, self-contained premium section'lar. **DİKKAT:** Bu projede
 Klasik **sabit** header istiyor: premium-header'da **ghost/hayalet mod KAPALI** ve
 **aşağı kaydırınca gizlenme KAPALI** olmalı.
 
-> Durum tespiti (2026-07-11): Canlı `header-group.json` içinde bu tema için `ghost: false`
-> ve `hide_on_scroll: false` — yani şu an KAPALI, istek karşılanıyor.
-> ANCAK `headertestvol2.liquid` schema **default'ları `true`** (ghost + hide_on_scroll).
-> Yani yeni bir Premium Header bloğu eklenirse/sıfırlanırsa AÇIK gelir. Sahibin isteğine
-> tam uyum için schema default'larını `false` yapmak önerilir (onay bekliyor).
+> Durum (2026-07-11): Canlı `header-group.json` içinde bu tema için `ghost: false`
+> ve `hide_on_scroll: false` — KAPALI.
+> Ayrıca `headertestvol2.liquid` schema **default'ları da `false` yapıldı** (ghost +
+> hide_on_scroll). Böylece yeni Premium Header bloğu eklenirse/sıfırlanırsa da KAPALI gelir.
+> Bu değişiklik yerelde + GitHub'da; Shopify'a HENÜZ push edilmedi.
 
 ## AKTİF (CANLI) DURUM — test teması
 - **index.json** (ana sayfa) içinde aktif premium'lar: test2 (Slider), test5 (Tekli Banner),
