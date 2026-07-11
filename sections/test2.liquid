@@ -7,7 +7,9 @@
   .ps-{{ uid }} { position: relative; }
   .ps-{{ uid }} .ps-frame {
     position: relative; overflow: hidden;
-    height: {{ section.settings.height }};
+    width: 100%;
+    aspect-ratio: 20 / 9;
+    max-height: {{ section.settings.height }};
     min-height: 420px;
     {% if section.settings.setwidth == 'container' %}
       max-width: 1320px; margin: 0 auto;
@@ -23,9 +25,9 @@
   .ps-{{ uid }} .ps-slide.is-active { opacity: 1; visibility: visible; z-index: 2; }
 
   .ps-{{ uid }} .ps-slide img {
-    width: 100%; height: 100%; object-fit: cover; display: block;
-    transform: scale(1.12);
-    transition: transform 7s cubic-bezier(.19, 1, .22, 1);
+    width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;
+    transform: scale(1.04);
+    transition: transform 8s cubic-bezier(.19, 1, .22, 1);
   }
   .ps-{{ uid }} .ps-slide.is-active img { transform: scale(1); }
 
