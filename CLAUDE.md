@@ -22,6 +22,7 @@ Temadan bağımsız, self-contained premium section'lar. **DİKKAT:** Bu projede
 | test4.liquid             | Premium Yorumlar        | `.pt-`       | premium-testimonials    |
 | test7.liquid             | Premium Footer          | `.pf-`       | premium-footer          |
 | test6.liquid             | (BOŞ — 0 satır)         | —            | kullanılmıyor           |
+| premium-trustbar.liquid  | Premium Güven Şeridi    | `.ptb-`      | premium-trustbar (YENİ) |
 
 ## TASARIM DİLİ
 - Altın vurgu **#b8860b** (schema'da `accent_color`).
@@ -52,8 +53,14 @@ Klasik **sabit** header istiyor: premium-header'da **ghost/hayalet mod KAPALI** 
 > Bu değişiklik yerelde + GitHub'da; Shopify'a HENÜZ push edilmedi.
 
 ## AKTİF (CANLI) DURUM — test teması
-- **index.json** (ana sayfa) içinde aktif premium'lar: test2 (Slider), test5 (Tekli Banner),
-  test3 (Ürün Vitrini), test (Banner), test4 (Yorumlar).
+- **index.json** (ana sayfa) 2026-07-11'de sadeleştirildi: 25 → 7 bölüm (18 disabled eski
+  bölüm kaldırıldı). Görünen sıra:
+  test2 (Slider) → premium-trustbar (Güven Şeridi) → test5 (Tekli Banner) →
+  test3 (Ürün Vitrini) → test (Banner) → instagram-customize → test4 (Yorumlar).
+- Ana sayfa güzelleştirme (2026-07-11, yerel+GitHub, Shopify'a push YOK):
+  (1) Slider kenar kırpılması giderildi (aspect-ratio 20/9). (2) Güven şeridi eklendi.
+  (3) 18 disabled bölüm silindi. (4) Soldaki Dakaas sosyal bar app embed kapatıldı
+  (settings_data.json). (5) Bölüm padding'leri 60px'e normalize edildi. (6) Hero preload.
 - **header-group.json**: sadece `headertestvol2` (Premium Header) aktif; eski `header`,
   `announcement-bar-slide`, `store-messages` blokları `disabled: true`.
 - **footer-group.json**: sadece `test7` (Premium Footer) aktif; eski `footer` ve
