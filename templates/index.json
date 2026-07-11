@@ -9,6 +9,23 @@
  */
 {
   "sections": {
+    "trustbar_fg01": {
+      "type": "premium-trustbar",
+      "blocks": {
+        "tb1": { "type": "item", "settings": { "icon": "truck", "title": "Ücretsiz Kargo", "subtitle": "Tüm Türkiye'ye" } },
+        "tb2": { "type": "item", "settings": { "icon": "shield", "title": "2 Yıl Garanti", "subtitle": "Resmi distribütör" } },
+        "tb3": { "type": "item", "settings": { "icon": "lock", "title": "Güvenli Ödeme", "subtitle": "256-bit SSL" } },
+        "tb4": { "type": "item", "settings": { "icon": "tools", "title": "Kapıda Kurulum", "subtitle": "Uzman ekip" } }
+      },
+      "block_order": ["tb1", "tb2", "tb3", "tb4"],
+      "settings": {
+        "bg_color": "#ffffff",
+        "text_color": "#141414",
+        "accent_color": "#b8860b",
+        "glass": false,
+        "padding_y": 20
+      }
+    },
     "2eb6b70b-dbd5-4aeb-ab9b-4433f8269284": {
       "type": "grid-banner",
       "blocks": {
@@ -1205,6 +1222,7 @@
     "16609007639672b3d5",
     "ea256325-7ebc-4ad1-9d79-25dc551f1f31",
     "test2_nCBjaa",
+    "trustbar_fg01",
     "test5_bx3fPC",
     "test3_6LihgA",
     "test_djdfmY",
