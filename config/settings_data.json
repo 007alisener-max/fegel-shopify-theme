@@ -2657,7 +2657,7 @@
       },
       "8698826295320421822": {
         "type": "shopify://apps/dakaas-social-bar/blocks/app-embed/0d821215-43b9-4a39-925d-44613cd0dd23",
-        "disabled": false,
+        "disabled": true,
         "settings": {}
       },
       "6544682535036668446": {
