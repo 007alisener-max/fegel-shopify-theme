@@ -3,6 +3,18 @@
 {%- assign uid = section.id -%}
 {%- assign total = section.blocks.size -%}
 
+{%- comment -%} LCP: ilk slaytın görselini önceden yükle (img srcset ile birebir eşleşir) {%- endcomment -%}
+{%- assign first_slide = section.blocks.first -%}
+{%- if first_slide.settings.image != blank and first_slide.settings.image_mobile == blank -%}
+  <link
+    rel="preload"
+    as="image"
+    imagesrcset="{{ first_slide.settings.image | image_url: width: 1100 }} 1100w, {{ first_slide.settings.image | image_url: width: 1920 }} 1920w, {{ first_slide.settings.image | image_url: width: 2400 }} 2400w"
+    imagesizes="100vw"
+    fetchpriority="high"
+  >
+{%- endif -%}
+
 <style>
   .ps-{{ uid }} { position: relative; }
   .ps-{{ uid }} .ps-frame {
