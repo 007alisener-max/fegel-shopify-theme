@@ -1,0 +1,92 @@
+<script>
+  window.addEventListener('Globo.swatch.loaded',function(){
+    var variants = {}
+        , product_variants = {};
+    var default_variant = 0
+        , variant_assigned_images = []
+        , variants_media = {}
+        , product_media = [];
+    var variant_assigned_media = []
+        , variant_assigned_images_ids = []
+        , variant_assigned_media_ids = []
+        , all_variant_media = []
+        , all_variant_images = [];
+    product_media = GloboSwatchConfig.product.media;
+    GloboSwatchConfig.product.variants.forEach((function (variant) {
+        variant.featured_image && -1 == variant_assigned_images_ids.indexOf(variant.featured_image.id) && (variant_assigned_images_ids.push(variant.featured_image.id),
+            variant_assigned_images.push(variant.featured_image));
+        variant.featured_media && -1 == variant_assigned_media_ids.indexOf(variant.featured_media.id) && (variant_assigned_media_ids.push(variant.featured_media.id),
+            variant_assigned_media.push(variant.featured_media));
+        !default_variant && variant.available && (default_variant = variant.id),
+            variant.featured_media && (all_variant_media[variant.featured_media.id] || (all_variant_media[variant.featured_media.id] = []),
+                all_variant_media[variant.featured_media.id].push(variant.id)),
+            variants_media[variant.id] = [],
+            variant.featured_image && (all_variant_images[variant.featured_image.id] || (all_variant_images[variant.featured_image.id] = []),
+                all_variant_images[variant.featured_image.id].push(variant.id)),
+            variants[variant.id] = [],
+            product_variants[variant.id] = variant
+    }
+    ));
+
+    var current_variant_ids = [];
+    product_media.forEach((function (media, index) {
+        (current_variant_ids = all_variant_media[media.id] ? all_variant_media[media.id] : current_variant_ids).forEach((function (variant_id) {
+            variants_media[variant_id].push(media)
+        }
+        ))
+    }
+    ))
+    function find_variant_media(variant_id) {
+        return variant_id && variants_media.hasOwnProperty(variant_id) ?
+            variants_media[variant_id] : product_media;
+    }
+
+    const variants_media_loaded = find_variant_media(GloboSwatchConfig?.curVariant?.id);
+    const variants_media_default_ids = variants_media_loaded.map(media => String(media.id));
+    const optionsSwatch = document.querySelectorAll('.globo-swatch-product-detail .swatch--gl');
+    var all_checked = true;
+
+    for (var i = 0; i < optionsSwatch.length; i++) {
+        if (optionsSwatch[i].querySelectorAll('input[type="radio"]:checked').length == 0) {
+            all_checked = false;
+        }
+    }
+    if (all_checked) {
+
+        if (document.querySelectorAll('.my-gallery .photo-image.product-single__photo').length) {
+            document.querySelectorAll('.my-gallery .photo-image.product-single__photo').forEach(selector_media_item => {
+                if (selector_media_item) {
+                    const media_id = selector_media_item.getAttribute('data-image-id');
+                    if (media_id && !variants_media_default_ids.includes(media_id)) {
+                        selector_media_item.classList.add('globo-sw-media--hide');
+                    } else {
+                        selector_media_item.classList.remove('globo-sw-media--hide');
+                    }
+                }
+            });
+        }
+    }
+
+    document.querySelectorAll('.globo-swatch-product-detail .swatch--gl .g-variant-color-detail .select-option input[type="radio"]').forEach(input => {
+        input.addEventListener('change', () => {
+            const variantId = input.closest('li.select-option').getAttribute('data-variantId');
+            const variants_media_current = find_variant_media(variantId);
+            const variants_media_current_ids = variants_media_current.map(media => String(media.id));
+
+            if (document.querySelectorAll('.my-gallery .photo-image.product-single__photo').length) {
+                document.querySelectorAll('.my-gallery .photo-image.product-single__photo').forEach(selector_media_item => {
+                    if (selector_media_item) {
+                        const media_id = selector_media_item.getAttribute('data-image-id');
+                        if (media_id && !variants_media_current_ids.includes(media_id)) {
+                            selector_media_item.classList.add('globo-sw-media--hide');
+                        } else {
+                            selector_media_item.classList.remove('globo-sw-media--hide');
+                        }
+                    }
+                });
+            }
+
+        });
+    });
+  });
+</script>

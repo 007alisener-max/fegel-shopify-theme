@@ -1,0 +1,249 @@
+{%- comment -%} premium-single-banner.liquid {%- endcomment -%}
+
+{%- assign uid = section.id -%}
+
+<style>
+  .psb-{{ uid }} {
+    --psb-accent: {{ section.settings.accent_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.section_bg }};
+  }
+  .psb-{{ uid }} .psb-frame {
+    position: relative; overflow: hidden; isolation: isolate;
+    height: {{ section.settings.height }};
+    min-height: 340px;
+    {% if section.settings.setwidth == 'container' %}
+      max-width: 1320px; margin: 0 auto;
+      border-radius: {{ section.settings.radius }}px;
+      width: calc(100% - 40px);
+    {% endif %}
+  }
+
+  .psb-{{ uid }} .psb-frame img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    {% if section.settings.kenburns %}
+      animation: psbZoom-{{ uid }} 18s ease-in-out infinite alternate;
+    {% endif %}
+  }
+  @keyframes psbZoom-{{ uid }} {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+  }
+
+  .psb-{{ uid }} .psb-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(
+      {% if section.settings.horizontal == 'right' %}to left{% elsif section.settings.horizontal == 'center' %}to top{% else %}to right{% endif %},
+      rgba({{ section.settings.overlay_color.red }}, {{ section.settings.overlay_color.green }}, {{ section.settings.overlay_color.blue }}, {{ section.settings.overlay_opacity }}) 0%,
+      rgba({{ section.settings.overlay_color.red }}, {{ section.settings.overlay_color.green }}, {{ section.settings.overlay_color.blue }}, 0) 75%
+    );
+  }
+
+  .psb-{{ uid }} .psb-content {
+    position: absolute; inset: 0; z-index: 2;
+    display: flex; align-items: center;
+    padding: 40px 7vw;
+    color: {{ section.settings.text_color }};
+  }
+  .psb-{{ uid }} .psb-content.h-center { justify-content: center; text-align: center; }
+  .psb-{{ uid }} .psb-content.h-right  { justify-content: flex-end; text-align: right; }
+
+  .psb-{{ uid }} .psb-box { max-width: 560px; }
+  .psb-{{ uid }} .psb-box.glass {
+    background: rgba(255,255,255,.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 20px;
+    padding: 34px 38px;
+  }
+
+  .psb-{{ uid }} .psb-el {
+    opacity: 0; transform: translateY(26px);
+    transition: opacity .9s ease, transform .9s cubic-bezier(.19,1,.22,1);
+  }
+  .psb-{{ uid }}.is-visible .psb-el { opacity: 1; transform: translateY(0); }
+  .psb-{{ uid }}.is-visible .psb-el:nth-child(1) { transition-delay: .1s; }
+  .psb-{{ uid }}.is-visible .psb-el:nth-child(2) { transition-delay: .25s; }
+  .psb-{{ uid }}.is-visible .psb-el:nth-child(3) { transition-delay: .4s; }
+  .psb-{{ uid }}.is-visible .psb-el:nth-child(4) { transition-delay: .55s; }
+
+  .psb-{{ uid }} .psb-sub {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 12px; letter-spacing: .28em; text-transform: uppercase; font-weight: 600;
+    color: var(--psb-accent); margin-bottom: 16px;
+  }
+  .psb-{{ uid }} .psb-sub::before { content: ""; width: 40px; height: 1px; background: var(--psb-accent); opacity: .7; }
+  .psb-{{ uid }} .psb-content.h-center .psb-sub::after { content: ""; width: 40px; height: 1px; background: var(--psb-accent); opacity: .7; }
+
+  .psb-{{ uid }} .psb-title { font-size: clamp(28px, 4vw, 52px); line-height: 1.1; margin: 0 0 16px; }
+  .psb-{{ uid }} .psb-desc { font-size: 15px; line-height: 1.7; opacity: .9; margin: 0 0 26px; }
+
+  .psb-{{ uid }} .psb-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
+    color: inherit; text-decoration: none;
+    padding: 15px 32px; border: 1px solid currentColor; border-radius: 999px;
+    transition: background .5s ease, color .5s ease, border-color .5s ease;
+  }
+  .psb-{{ uid }} .psb-btn:hover { background: var(--psb-accent); border-color: var(--psb-accent); color: #fff; }
+  .psb-{{ uid }} .psb-btn svg { width: 15px; height: 15px; transition: transform .4s ease; }
+  .psb-{{ uid }} .psb-btn:hover svg { transform: translateX(5px); }
+
+  @media (max-width: 749px) {
+    .psb-{{ uid }} { padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px; }
+    .psb-{{ uid }} .psb-frame { height: {{ section.settings.height_mobile }}; min-height: 300px; }
+    .psb-{{ uid }} .psb-content { padding: 26px 22px; }
+    .psb-{{ uid }} .psb-box.glass { padding: 24px 24px; }
+  }
+</style>
+
+<div class="psb-{{ uid }}" id="PsbBanner-{{ uid }}">
+  <div class="psb-frame">
+
+    {%- if section.settings.image != blank -%}
+      <picture>
+        {%- if section.settings.image_mobile != blank -%}
+          <source media="(max-width: 749px)" srcset="{{ section.settings.image_mobile | image_url: width: 900 }}">
+        {%- endif -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 1920 }}"
+          srcset="
+            {{ section.settings.image | image_url: width: 1100 }} 1100w,
+            {{ section.settings.image | image_url: width: 1920 }} 1920w,
+            {{ section.settings.image | image_url: width: 2400 }} 2400w
+          "
+          sizes="100vw"
+          alt="{{ section.settings.image.alt | default: section.settings.title | escape }}"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          loading="lazy"
+        >
+      </picture>
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+
+    <span class="psb-overlay"></span>
+
+    <div class="psb-content h-{{ section.settings.horizontal }}">
+      <div class="psb-box {% if section.settings.glass %}glass{% endif %}">
+        {%- if section.settings.subtitle != blank -%}
+          <div class="psb-el"><span class="psb-sub">{{ section.settings.subtitle }}</span></div>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h2 class="psb-el psb-title">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <div class="psb-el psb-desc">{{ section.settings.description }}</div>
+        {%- endif -%}
+        {%- if section.settings.button_text != blank -%}
+          <div class="psb-el">
+            <a href="{{ section.settings.button_link | default: '#' }}" class="psb-btn">
+              {{ section.settings.button_text }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('PsbBanner-{{ uid }}');
+    if (!root || root.dataset.init) return;
+    root.dataset.init = '1';
+
+    if (!('IntersectionObserver' in window)) {
+      root.classList.add('is-visible');
+      return;
+    }
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          root.classList.add('is-visible');
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.25 });
+    obs.observe(root);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Premium Tekli Banner",
+  "class": "index-section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Görsel" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Mobil Görsel (opsiyonel)" },
+    { "type": "text", "id": "subtitle", "label": "Üst Başlık", "default": "Kampanya" },
+    { "type": "text", "id": "title", "label": "Başlık", "default": "Sezon Fırsatları Başladı" },
+    { "type": "textarea", "id": "description", "label": "Açıklama" },
+    { "type": "text", "id": "button_text", "label": "Buton Metni", "default": "Hemen İncele" },
+    { "type": "url", "id": "button_link", "label": "Buton Linki" },
+    {
+      "type": "select", "id": "horizontal", "label": "İçerik Konumu", "default": "left",
+      "options": [
+        { "value": "left", "label": "Sol" },
+        { "value": "center", "label": "Orta" },
+        { "value": "right", "label": "Sağ" }
+      ]
+    },
+    { "type": "checkbox", "id": "glass", "label": "Buz Camı Kutu (Glassmorphism)", "default": false },
+    { "type": "checkbox", "id": "kenburns", "label": "Yavaş Zoom Efekti (Ken Burns)", "default": true },
+    {
+      "type": "select", "id": "setwidth", "label": "Genişlik", "default": "container",
+      "options": [
+        { "value": "container", "label": "Kutulu" },
+        { "value": "full", "label": "Tam Genişlik" }
+      ]
+    },
+    {
+      "type": "range", "id": "radius", "label": "Köşe Yuvarlama (kutulu modda)",
+      "min": 0, "max": 32, "step": 2, "unit": "px", "default": 20
+    },
+    {
+      "type": "select", "id": "height", "label": "Yükseklik (masaüstü)", "default": "60vh",
+      "options": [
+        { "value": "80vh", "label": "Büyük" },
+        { "value": "60vh", "label": "Orta" },
+        { "value": "45vh", "label": "Küçük" },
+        { "value": "35vh", "label": "İnce Şerit" }
+      ]
+    },
+    {
+      "type": "select", "id": "height_mobile", "label": "Yükseklik (mobil)", "default": "55vh",
+      "options": [
+        { "value": "75vh", "label": "Büyük" },
+        { "value": "55vh", "label": "Orta" },
+        { "value": "40vh", "label": "Küçük" }
+      ]
+    },
+    { "type": "header", "content": "Renkler" },
+    { "type": "color", "id": "section_bg", "label": "Bölüm Arkaplanı", "default": "#ffffff" },
+    { "type": "color", "id": "text_color", "label": "Yazı Rengi", "default": "#ffffff" },
+    { "type": "color", "id": "accent_color", "label": "Vurgu Rengi", "default": "#b8860b" },
+    { "type": "color", "id": "overlay_color", "label": "Overlay Rengi", "default": "#000000" },
+    {
+      "type": "range", "id": "overlay_opacity", "label": "Overlay Yoğunluğu",
+      "min": 0, "max": 0.9, "step": 0.1, "default": 0.5
+    },
+    { "type": "header", "content": "Boşluklar" },
+    {
+      "type": "range", "id": "padding_top", "label": "Üst Boşluk",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40
+    },
+    {
+      "type": "range", "id": "padding_bottom", "label": "Alt Boşluk",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40
+    }
+  ],
+  "presets": [
+    { "name": "Premium Tekli Banner", "category": "Image" }
+  ]
+}
+{% endschema %}

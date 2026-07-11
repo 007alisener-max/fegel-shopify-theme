@@ -1,0 +1,148 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header Group",
+  "sections": {
+    "announcement-bar-slide": {
+      "type": "announcement-bar-slide",
+      "blocks": {
+        "a00daf6f-fb1c-4351-80dc-24e405bf630e": {
+          "type": "Item",
+          "settings": {
+            "code": "<font size=\"3\">Tüm masaj aletlerinde <b>ücretsiz kargo</b> fırsatı!</font>",
+            "button_text": "",
+            "button_link": "shopify://collections"
+          }
+        },
+        "afb084a9-2a31-4207-9d23-694c0f6b1281": {
+          "type": "Item",
+          "settings": {
+            "code": "<font size=\"3\">Tüm ürünlerde <b>%25'e varan</b> indirim!</font>",
+            "button_text": "",
+            "button_link": "shopify://collections/best-seller"
+          }
+        }
+      },
+      "block_order": [
+        "a00daf6f-fb1c-4351-80dc-24e405bf630e",
+        "afb084a9-2a31-4207-9d23-694c0f6b1281"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable": true,
+        "animation": "fade",
+        "size_text": "normal",
+        "announ_type": "scroll",
+        "scroll_dot": "line",
+        "size_icon": 24,
+        "speed": 20,
+        "scroll_type": "from-right",
+        "background": "#292358",
+        "gradient_bg": "",
+        "text": "#ffffff"
+      }
+    },
+    "header": {
+      "type": "header",
+      "disabled": true,
+      "settings": {
+        "logo": "shopify://shop_images/Fegel_Logo.png",
+        "logo_max_width": 250,
+        "enable_transparent": false,
+        "hover_transparent": false,
+        "enable_white": false,
+        "setwidth": "container-fluid",
+        "layout_header": "logo-center-navigation-center",
+        "type_sticky": "sticky",
+        "height_header": "small",
+        "topbarbg": "#f5f5f5",
+        "topborderbg": "rgba(0,0,0,0)",
+        "textcolor-top": "#000000",
+        "background": "#e9ebf5",
+        "textcolor": "#2f3336",
+        "linkcolor": "#2f3336",
+        "linkhover": "#000000",
+        "menutext": "#2c314b",
+        "menutexthover": "#8c8c8c",
+        "menudroptexttitle": "#2c314b",
+        "menudroptext": "#8c8c8c",
+        "menudropbg": "#ffffff",
+        "menudropborder": "#f1f1f1",
+        "main_linklist": "main-menu",
+        "font_family_menu": "--g-font-1",
+        "font_sizemenu": "14",
+        "font_weight": "600",
+        "menu_spacing": 0.1,
+        "menu_space": 1.5,
+        "type_menu": "uppercase",
+        "menu_active": "thick-line",
+        "menu_label_text": "#ffffff",
+        "menu_label_new": "#01bad4",
+        "menu_label_hot": "#d24418",
+        "menu_label_sale": "#ffa800",
+        "menu_label_other": "#848484",
+        "enable_menu_vertical": false,
+        "sl_menu_vertical": "click-menu",
+        "main_linklist_vertical": "",
+        "link_list_search": "",
+        "sidebar_search": true,
+        "e_hd_currency": false,
+        "enable_image": false,
+        "enable_name": false,
+        "enable_language_selector": false,
+        "icon_cart": "icon",
+        "svg_cart": "cart-1",
+        "icon_wishlist": "icon",
+        "icon_login": "icon",
+        "e_link_login": "link",
+        "icon_search": "icon"
+      }
+    },
+    "store-messages": {
+      "type": "store-messages",
+      "disabled": true,
+      "settings": {
+        "enable": false,
+        "enable_homepage": false,
+        "background": "#000000",
+        "gradient_bg": "",
+        "text": "#ffffff",
+        "paddingsection": "8px 0px 8px 0px",
+        "paddingmobile": "8px 0px 8px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "headertestvol2_pzG6yX": {
+      "type": "headertestvol2",
+      "name": "Premium Header",
+      "settings": {
+        "logo": "shopify://shop_images/Fegel_Logo.avif",
+        "logo_width": 220,
+        "menu": "main-menu",
+        "ghost": false,
+        "hide_on_scroll": false,
+        "show_search": true,
+        "show_account": true,
+        "bg_color": "#ffffff",
+        "text_color": "#141414",
+        "text_color_ghost": "#ffffff",
+        "accent_color": "#b8860b"
+      }
+    }
+  },
+  "order": [
+    "announcement-bar-slide",
+    "header",
+    "store-messages",
+    "headertestvol2_pzG6yX"
+  ]
+}

@@ -1,0 +1,17 @@
+# Shopify CLI
+.shopify/
+*.shopifyignore
+
+# Bağımlılıklar
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Log & geçici
+*.log
+*.tmp
+.env
+.env.*

@@ -1,0 +1,13 @@
+/* Sepet çekmesindeki Remove butonu */
+button.js-remove-mini-cart {
+  position: relative;
+  color: transparent;
+  font-size: 0;
+}
+
+button.js-remove-mini-cart::after {
+  content: "Sil";
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+}

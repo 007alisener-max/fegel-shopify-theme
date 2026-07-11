@@ -1,0 +1,166 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "e7285e43-2bb7-46e5-a5e4-538568d8723e": {
+      "type": "image-content",
+      "blocks": {
+        "template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-0": {
+          "type": "image_block",
+          "settings": {}
+        },
+        "template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-1": {
+          "type": "text_block",
+          "settings": {
+            "width": "100%",
+            "bgtext": "rgba(0,0,0,0)",
+            "title_color": "rgba(0,0,0,0)",
+            "subtitle": "Questions?",
+            "title": "We're here to help with sizing, stylingand anything else",
+            "size_text": "h3",
+            "text": "",
+            "answer_content": "<p>3 Year Warranty, Extended 90 Day Returns,<strong> </strong>Expedited Shipping</p>",
+            "style_btn": "btn-underline btn-underline-white",
+            "button": "",
+            "link": "",
+            "enable_padding": true,
+            "align": "left"
+          }
+        }
+      },
+      "block_order": [
+        "template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-0",
+        "template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-1"
+      ],
+      "disabled": true,
+      "settings": {
+        "animation": "fade-up",
+        "setwidth": "full",
+        "bgsection": "#f7f7f7",
+        "rangebg": 0,
+        "bgbefore": "rgba(0,0,0,0)",
+        "bg_pos": "left",
+        "enable_padding": true,
+        "align_center": true,
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "0px 0px 60px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "c025329d-7132-4163-b678-b778c06ac8f9": {
+      "type": "line",
+      "settings": {
+        "animation": "fade",
+        "paddingsection": "0px 0px 0px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "bgsection": "#ffffff",
+        "setwidth": "full",
+        "bgborder": "#e7e7e7",
+        "wborder": "1px"
+      }
+    },
+    "863c2be4-cbba-4ba1-ba39-64e0fe639fc6": {
+      "type": "contact-form",
+      "settings": {
+        "animation": "",
+        "bgsection": "#ffffff",
+        "title_top": "",
+        "title": "Sorunuz mu var?",
+        "des": "Bizimle iletişime geçmek için aşağıdaki formu kullanın.",
+        "align-heading": "center",
+        "answer_content": "",
+        "paddingsection": "80px 0px 80px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "e47bb256-2659-485f-9896-382aaec96e87": {
+      "type": "map",
+      "settings": {
+        "heading": "Fegel Comfort",
+        "address": "<p><strong>+90 (216) 504 30 51<br/>+90 (533) 576 08 01</strong></p><p>info@fegelcomfort.com<br/><br/></p><p><strong>Quant Plaza B<br/></strong>Şerifali Mah. Turgut Özal Bulvarı No: 154/27<br/>Ümraniye / İstanbul, Türkiye</p>",
+        "map_address": "Şerifali Mah. Turgut Özal Bulvarı No: 154/26Ümraniye / İstanbul, Türkiye",
+        "button_text": "Yol Tarifi Al",
+        "show_pin": true,
+        "api_key": "",
+        "map_code": "<div class=\"mapouter\"><div class=\"gmap_canvas\">\n<iframe width=\"600\" height=\"500\" id=\"gmap_canvas\" src=\"https://maps.google.com/maps?q=fegel%20comfort&t=&z=19&ie=UTF8&iwloc=&output=embed\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\"></iframe><a href=\"https://123movies-a.com\"></a><br><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}</style>\n<a href=\"https://www.embedgooglemap.net\"></a><style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style>\n</div></div>",
+        "background_image_position": "center center"
+      }
+    },
+    "a1490854-4f8f-471c-864a-2fb0e79e264b": {
+      "type": "faq-accordion",
+      "blocks": {
+        "template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-0": {
+          "type": "faq",
+          "settings": {
+            "faq_title": "How long will shipping take?",
+            "faq_des": "<p>All orders are shipped within 12-36 hours from our warehouse in Bellingham WA.  Delivery times will depend on your shipping option but all orders are tracked from our facility to your door.  </p>"
+          }
+        },
+        "template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-1": {
+          "type": "faq",
+          "settings": {
+            "faq_title": "How do I know if my order is confirmed?",
+            "faq_des": "<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.</p>"
+          }
+        },
+        "template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-2": {
+          "type": "faq",
+          "settings": {
+            "faq_title": "Can I change my shipping address after my order is placed?",
+            "faq_des": "<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-0",
+        "template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-1",
+        "template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "animation": "fade-up",
+        "setwidth": "container",
+        "bgsection": "#ffffff",
+        "e_size": "auto",
+        "e_repeat": "no-repeat",
+        "e_pos": "center center",
+        "title_top": "",
+        "title": "FAQs",
+        "des": "Below are some of are common questions",
+        "align-heading": "center",
+        "title_size": "h6",
+        "e_first_open": false,
+        "e_reverse": true,
+        "e_small": true,
+        "left_html": "",
+        "e_right": false,
+        "paddingsection": "80px 0px 80px 0px",
+        "paddingmobile": "60px 0px 60px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "e7285e43-2bb7-46e5-a5e4-538568d8723e",
+    "c025329d-7132-4163-b678-b778c06ac8f9",
+    "863c2be4-cbba-4ba1-ba39-64e0fe639fc6",
+    "e47bb256-2659-485f-9896-382aaec96e87",
+    "a1490854-4f8f-471c-864a-2fb0e79e264b"
+  ]
+}

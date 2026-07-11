@@ -1,0 +1,293 @@
+{%- comment -%} premium-banner.liquid {%- endcomment -%}
+
+{%- assign uid = section.id -%}
+
+<style>
+  .pb-{{ uid }} {
+    background: {{ section.settings.section_bg }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+  .pb-{{ uid }} .pb-inner {
+    margin: 0 auto;
+    padding: 0 20px;
+    {% if section.settings.setwidth == 'container' %} max-width: 1320px; {% endif %}
+    {% if section.settings.setwidth == 'full' %} padding: 0; {% endif %}
+  }
+  .pb-{{ uid }} .pb-head { margin-bottom: 48px; text-align: {{ section.settings.head_align }}; }
+  .pb-{{ uid }} .pb-subheading {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 12px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: {{ section.settings.accent_color }}; margin-bottom: 14px; font-weight: 600;
+  }
+  .pb-{{ uid }} .pb-subheading::before,
+  .pb-{{ uid }} .pb-subheading::after { content: ""; width: 36px; height: 1px; background: {{ section.settings.accent_color }}; opacity: .6; }
+  {% if section.settings.head_align == 'left' %} .pb-{{ uid }} .pb-subheading::before { display: none; } {% endif %}
+  {% if section.settings.head_align == 'right' %} .pb-{{ uid }} .pb-subheading::after { display: none; } {% endif %}
+  .pb-{{ uid }} .pb-heading { font-size: clamp(26px, 3.2vw, 42px); line-height: 1.15; margin: 0; }
+
+  .pb-{{ uid }} .pb-grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
+    gap: {{ section.settings.gap }}px;
+  }
+  .pb-{{ uid }} .pb-card {
+    position: relative; overflow: hidden; display: block;
+    border-radius: {{ section.settings.radius }}px;
+    isolation: isolate;
+    {% if section.settings.ratio != 'auto' %} aspect-ratio: {{ section.settings.ratio }}; {% endif %}
+  }
+  .pb-{{ uid }} .pb-card img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transform: scale(1.02);
+    transition: transform 1.4s cubic-bezier(.19, 1, .22, 1);
+  }
+  .pb-{{ uid }} .pb-card:hover img { transform: scale(1.1); }
+
+  .pb-{{ uid }} .pb-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(
+      to top,
+      rgba({{ section.settings.overlay_color.red }}, {{ section.settings.overlay_color.green }}, {{ section.settings.overlay_color.blue }}, {{ section.settings.overlay_opacity }}) 0%,
+      rgba({{ section.settings.overlay_color.red }}, {{ section.settings.overlay_color.green }}, {{ section.settings.overlay_color.blue }}, 0) 65%
+    );
+    transition: opacity .6s ease;
+  }
+  .pb-{{ uid }} .pb-card:hover .pb-overlay { opacity: .85; }
+
+  .pb-{{ uid }} .pb-content {
+    position: absolute; inset: 0; z-index: 2;
+    display: flex; flex-direction: column; padding: 32px;
+  }
+  .pb-{{ uid }} .pb-content.v-top    { justify-content: flex-start; }
+  .pb-{{ uid }} .pb-content.v-mid    { justify-content: center; }
+  .pb-{{ uid }} .pb-content.v-bottom { justify-content: flex-end; }
+  .pb-{{ uid }} .pb-content.h-left   { align-items: flex-start; text-align: left; }
+  .pb-{{ uid }} .pb-content.h-center { align-items: center; text-align: center; }
+  .pb-{{ uid }} .pb-content.h-right  { align-items: flex-end; text-align: right; }
+
+  .pb-{{ uid }} .pb-box {
+    max-width: 90%;
+    transform: translateY(10px);
+    transition: transform .7s cubic-bezier(.19, 1, .22, 1);
+  }
+  .pb-{{ uid }} .pb-card:hover .pb-box { transform: translateY(0); }
+  .pb-{{ uid }} .pb-box.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: calc({{ section.settings.radius }}px * 0.6);
+    padding: 24px 28px;
+  }
+
+  .pb-{{ uid }} .pb-sub {
+    font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 10px; opacity: .85;
+  }
+  .pb-{{ uid }} .pb-title { font-size: clamp(20px, 2vw, 30px); line-height: 1.2; margin: 0 0 10px; }
+  .pb-{{ uid }} .pb-desc { font-size: 14px; line-height: 1.6; opacity: .85; margin: 0 0 16px; }
+  .pb-{{ uid }} .pb-desc p { margin: 0; }
+
+  .pb-{{ uid }} .pb-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600;
+    padding-bottom: 4px; position: relative; text-decoration: none;
+    color: inherit;
+  }
+  .pb-{{ uid }} .pb-btn::after {
+    content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
+    background: currentColor; transform: scaleX(.35); transform-origin: left;
+    transition: transform .5s cubic-bezier(.19, 1, .22, 1);
+  }
+  .pb-{{ uid }} .pb-card:hover .pb-btn::after { transform: scaleX(1); }
+  .pb-{{ uid }} .pb-btn svg { width: 16px; height: 16px; transition: transform .5s ease; }
+  .pb-{{ uid }} .pb-card:hover .pb-btn svg { transform: translateX(5px); }
+
+  @media (max-width: 989px) {
+    .pb-{{ uid }} .pb-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 749px) {
+    .pb-{{ uid }} { padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px; }
+    .pb-{{ uid }} .pb-grid { grid-template-columns: 1fr; }
+    .pb-{{ uid }} .pb-content { padding: 22px; }
+    .pb-{{ uid }} .pb-head { margin-bottom: 32px; }
+    .pb-{{ uid }} .pb-box { transform: none; }
+  }
+</style>
+
+<div class="pb-{{ uid }}">
+  <div class="pb-inner">
+
+    {%- if section.settings.subheading != blank or section.settings.heading != blank -%}
+      <div class="pb-head">
+        {%- if section.settings.subheading != blank -%}
+          <div class="pb-subheading">{{ section.settings.subheading }}</div>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="pb-heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="pb-grid">
+      {%- for block in section.blocks -%}
+        <a
+          class="pb-card"
+          href="{{ block.settings.link | default: '#' }}"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.image != blank -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 1200 }}"
+              srcset="
+                {{ block.settings.image | image_url: width: 600 }} 600w,
+                {{ block.settings.image | image_url: width: 900 }} 900w,
+                {{ block.settings.image | image_url: width: 1200 }} 1200w,
+                {{ block.settings.image | image_url: width: 1600 }} 1600w
+              "
+              sizes="(max-width: 749px) 100vw, {{ 100 | divided_by: section.settings.columns }}vw"
+              alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
+              loading="lazy"
+            >
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+
+          <span class="pb-overlay"></span>
+
+          <div class="pb-content v-{{ block.settings.vertical }} h-{{ block.settings.horizontal }}" style="color: {{ block.settings.text_color }};">
+            <div class="pb-box {% if block.settings.glass %}glass{% endif %}">
+              {%- if block.settings.subtitle != blank -%}
+                <div class="pb-sub">{{ block.settings.subtitle }}</div>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <h3 class="pb-title">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.description != blank -%}
+                <div class="pb-desc">{{ block.settings.description }}</div>
+              {%- endif -%}
+              {%- if block.settings.button_text != blank -%}
+                <span class="pb-btn">
+                  {{ block.settings.button_text }}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </span>
+              {%- endif -%}
+            </div>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Premium Banner",
+  "class": "index-section",
+  "settings": [
+    { "type": "text", "id": "subheading", "label": "Üst Başlık", "default": "Yeni Sezon" },
+    { "type": "text", "id": "heading", "label": "Başlık", "default": "Koleksiyonları Keşfet" },
+    {
+      "type": "select", "id": "head_align", "label": "Başlık Hizalama", "default": "center",
+      "options": [
+        { "value": "left", "label": "Sol" },
+        { "value": "center", "label": "Orta" },
+        { "value": "right", "label": "Sağ" }
+      ]
+    },
+    {
+      "type": "select", "id": "setwidth", "label": "Genişlik", "default": "container",
+      "options": [
+        { "value": "container", "label": "Kutulu" },
+        { "value": "wide", "label": "Geniş" },
+        { "value": "full", "label": "Tam Genişlik" }
+      ]
+    },
+    {
+      "type": "range", "id": "columns", "label": "Sütun Sayısı (masaüstü)",
+      "min": 1, "max": 4, "step": 1, "default": 3
+    },
+    {
+      "type": "range", "id": "gap", "label": "Görsel Arası Boşluk",
+      "min": 0, "max": 48, "step": 4, "unit": "px", "default": 24
+    },
+    {
+      "type": "range", "id": "radius", "label": "Köşe Yuvarlama",
+      "min": 0, "max": 32, "step": 2, "unit": "px", "default": 16
+    },
+    {
+      "type": "select", "id": "ratio", "label": "Görsel Oranı", "default": "3/4",
+      "options": [
+        { "value": "auto", "label": "Orijinal" },
+        { "value": "1/1", "label": "Kare (1:1)" },
+        { "value": "3/4", "label": "Dikey (3:4)" },
+        { "value": "4/3", "label": "Yatay (4:3)" },
+        { "value": "16/9", "label": "Sinematik (16:9)" }
+      ]
+    },
+    { "type": "color", "id": "section_bg", "label": "Bölüm Arkaplanı", "default": "#ffffff" },
+    { "type": "color", "id": "accent_color", "label": "Vurgu Rengi", "default": "#b8860b" },
+    { "type": "header", "content": "Overlay (Karartma)" },
+    { "type": "color", "id": "overlay_color", "label": "Overlay Rengi", "default": "#000000" },
+    {
+      "type": "range", "id": "overlay_opacity", "label": "Overlay Yoğunluğu",
+      "min": 0, "max": 0.9, "step": 0.1, "default": 0.6
+    },
+    { "type": "header", "content": "Boşluklar" },
+    {
+      "type": "range", "id": "padding_top", "label": "Üst Boşluk",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 60
+    },
+    {
+      "type": "range", "id": "padding_bottom", "label": "Alt Boşluk",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "banner",
+      "name": "Banner",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Görsel" },
+        { "type": "text", "id": "subtitle", "label": "Alt Başlık", "default": "Öne Çıkan" },
+        { "type": "text", "id": "title", "label": "Başlık", "default": "Banner Başlığı" },
+        { "type": "textarea", "id": "description", "label": "Açıklama" },
+        { "type": "text", "id": "button_text", "label": "Buton Metni", "default": "Keşfet" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "color", "id": "text_color", "label": "Yazı Rengi", "default": "#ffffff" },
+        { "type": "checkbox", "id": "glass", "label": "Buz Camı Kutu (Glassmorphism)", "default": false },
+        {
+          "type": "select", "id": "vertical", "label": "Dikey Konum", "default": "bottom",
+          "options": [
+            { "value": "top", "label": "Üst" },
+            { "value": "mid", "label": "Orta" },
+            { "value": "bottom", "label": "Alt" }
+          ]
+        },
+        {
+          "type": "select", "id": "horizontal", "label": "Yatay Konum", "default": "left",
+          "options": [
+            { "value": "left", "label": "Sol" },
+            { "value": "center", "label": "Orta" },
+            { "value": "right", "label": "Sağ" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Banner",
+      "category": "Image",
+      "blocks": [
+        { "type": "banner" },
+        { "type": "banner" },
+        { "type": "banner" }
+      ]
+    }
+  ]
+}
+{% endschema %}

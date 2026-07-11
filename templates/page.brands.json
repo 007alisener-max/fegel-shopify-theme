@@ -1,0 +1,173 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "1756289846b7c30092": {
+      "type": "apps",
+      "blocks": {
+        "qikify_form_builder_embed_form_Q8B6Pk": {
+          "type": "shopify://apps/qikify-form-builder/blocks/embed-form/753fa0d7-50d4-480a-b094-cff26e632c36",
+          "settings": {
+            "type": "form",
+            "formId": 506100
+          }
+        }
+      },
+      "block_order": [
+        "qikify_form_builder_embed_form_Q8B6Pk"
+      ],
+      "settings": {
+        "animation": "",
+        "setwidth": "container",
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "60px 0px 60px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px",
+        "bgsection": "#ffffff"
+      }
+    },
+    "main": {
+      "type": "page-brands",
+      "blocks": {
+        "1562225793110": {
+          "type": "character",
+          "settings": {
+            "title": "a",
+            "linklist": ""
+          }
+        },
+        "1562225801379": {
+          "type": "character",
+          "settings": {
+            "title": "b",
+            "linklist": ""
+          }
+        },
+        "1562225804072": {
+          "type": "character",
+          "settings": {
+            "title": "c",
+            "linklist": ""
+          }
+        },
+        "1562225817854": {
+          "type": "character",
+          "settings": {
+            "title": "d",
+            "linklist": ""
+          }
+        },
+        "1562663878669": {
+          "type": "character",
+          "settings": {
+            "title": "e",
+            "linklist": ""
+          }
+        },
+        "1562664116930": {
+          "type": "character",
+          "settings": {
+            "title": "g",
+            "linklist": ""
+          }
+        },
+        "1562664124153": {
+          "type": "character",
+          "settings": {
+            "title": "j",
+            "linklist": ""
+          }
+        },
+        "1562665381910": {
+          "type": "character",
+          "settings": {
+            "title": "l",
+            "linklist": ""
+          }
+        },
+        "1562665389578": {
+          "type": "character",
+          "settings": {
+            "title": "m",
+            "linklist": ""
+          }
+        },
+        "1562665401917": {
+          "type": "character",
+          "settings": {
+            "title": "s",
+            "linklist": ""
+          }
+        },
+        "1562665407951": {
+          "type": "character",
+          "settings": {
+            "title": "t",
+            "linklist": ""
+          }
+        },
+        "1562665414164": {
+          "type": "character",
+          "settings": {
+            "title": "v",
+            "linklist": ""
+          }
+        },
+        "1562665421157": {
+          "type": "character",
+          "settings": {
+            "title": "w",
+            "linklist": ""
+          }
+        },
+        "1562665426534": {
+          "type": "character",
+          "settings": {
+            "title": "z",
+            "linklist": ""
+          }
+        }
+      },
+      "block_order": [
+        "1562225793110",
+        "1562225801379",
+        "1562225804072",
+        "1562225817854",
+        "1562663878669",
+        "1562664116930",
+        "1562664124153",
+        "1562665381910",
+        "1562665389578",
+        "1562665401917",
+        "1562665407951",
+        "1562665414164",
+        "1562665421157",
+        "1562665426534"
+      ],
+      "disabled": true,
+      "settings": {
+        "animation": "",
+        "setwidth": "container",
+        "bgsection": "",
+        "title_top": "",
+        "title": "Featured Brands",
+        "des": "Promotions, new products and sales. Directly to your inbox.",
+        "paddingsection": "40px 0px 70px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    }
+  },
+  "order": [
+    "1756289846b7c30092",
+    "main"
+  ]
+}

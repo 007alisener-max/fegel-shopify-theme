@@ -1,0 +1,273 @@
+{%- comment -%} premium-products.liquid {%- endcomment -%}
+
+{%- assign uid = section.id -%}
+{%- assign coll = section.settings.collection -%}
+
+<style>
+  .pp-{{ uid }} {
+    --pp-accent: {{ section.settings.accent_color }};
+    background: {{ section.settings.section_bg }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+  .pp-{{ uid }} .pp-inner { max-width: 1320px; margin: 0 auto; padding: 0 20px; }
+
+  /* --- Başlık alanı --- */
+  .pp-{{ uid }} .pp-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 24px; margin-bottom: 44px;
+  }
+  .pp-{{ uid }} .pp-subheading {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 12px; letter-spacing: .25em; text-transform: uppercase; font-weight: 600;
+    color: var(--pp-accent); margin-bottom: 14px;
+  }
+  .pp-{{ uid }} .pp-subheading::before { content: ""; width: 36px; height: 1px; background: var(--pp-accent); opacity: .6; }
+  .pp-{{ uid }} .pp-heading {
+    font-size: clamp(26px, 3.2vw, 42px); line-height: 1.15; margin: 0;
+    color: {{ section.settings.heading_color }};
+  }
+  .pp-{{ uid }} .pp-viewall {
+    display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0;
+    font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
+    color: {{ section.settings.heading_color }}; text-decoration: none;
+    padding-bottom: 5px; position: relative; white-space: nowrap;
+  }
+  .pp-{{ uid }} .pp-viewall::after {
+    content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
+    background: var(--pp-accent); transform: scaleX(.4); transform-origin: left;
+    transition: transform .5s cubic-bezier(.19,1,.22,1);
+  }
+  .pp-{{ uid }} .pp-viewall:hover::after { transform: scaleX(1); }
+  .pp-{{ uid }} .pp-viewall svg { width: 15px; height: 15px; transition: transform .4s ease; }
+  .pp-{{ uid }} .pp-viewall:hover svg { transform: translateX(4px); }
+
+  /* --- Grid --- */
+  .pp-{{ uid }} .pp-grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
+    gap: {{ section.settings.gap }}px;
+  }
+
+  /* --- Kart --- */
+  .pp-{{ uid }} .pp-card { text-decoration: none; display: block; }
+  .pp-{{ uid }} .pp-media {
+    position: relative; overflow: hidden; isolation: isolate;
+    border-radius: {{ section.settings.radius }}px;
+    aspect-ratio: 3/4;
+    background: rgba(127,127,127,.06);
+    margin-bottom: 16px;
+  }
+  .pp-{{ uid }} .pp-media img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    transition: transform 1.2s cubic-bezier(.19,1,.22,1), opacity .7s ease;
+  }
+  .pp-{{ uid }} .pp-card:hover .pp-media img { transform: scale(1.07); }
+  .pp-{{ uid }} .pp-media .pp-img-hover { opacity: 0; }
+  .pp-{{ uid }} .pp-card:hover .pp-img-hover { opacity: 1; }
+
+  .pp-{{ uid }} .pp-badge {
+    position: absolute; top: 14px; left: 14px; z-index: 2;
+    font-size: 10px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700;
+    color: #fff; background: var(--pp-accent);
+    padding: 7px 12px; border-radius: 999px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.18);
+  }
+  .pp-{{ uid }} .pp-badge.soldout { background: #3a3a3a; }
+
+  .pp-{{ uid }} .pp-info { text-align: {{ section.settings.text_align }}; }
+  .pp-{{ uid }} .pp-vendor {
+    font-size: 11px; letter-spacing: .22em; text-transform: uppercase; font-weight: 600;
+    color: var(--pp-accent); margin-bottom: 6px;
+  }
+  .pp-{{ uid }} .pp-title {
+    font-size: 15px; font-weight: 600; line-height: 1.4; margin: 0 0 8px;
+    color: {{ section.settings.heading_color }};
+    transition: color .3s ease;
+  }
+  .pp-{{ uid }} .pp-card:hover .pp-title { color: var(--pp-accent); }
+  .pp-{{ uid }} .pp-price { font-size: 14px; font-weight: 600; color: {{ section.settings.heading_color }}; }
+  .pp-{{ uid }} .pp-price .was {
+    text-decoration: line-through; opacity: .45; font-weight: 500; margin-right: 8px;
+  }
+  .pp-{{ uid }} .pp-price .now.sale { color: var(--pp-accent); }
+
+  .pp-{{ uid }} .pp-cta {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 12px;
+    font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
+    color: {{ section.settings.heading_color }};
+    padding-bottom: 4px; position: relative;
+    opacity: 0; transform: translateY(8px);
+    transition: opacity .5s ease, transform .55s cubic-bezier(.19,1,.22,1);
+  }
+  .pp-{{ uid }} .pp-cta::after {
+    content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%;
+    background: var(--pp-accent); transform: scaleX(.35); transform-origin: left;
+    transition: transform .5s cubic-bezier(.19,1,.22,1);
+  }
+  .pp-{{ uid }} .pp-card:hover .pp-cta { opacity: 1; transform: translateY(0); }
+  .pp-{{ uid }} .pp-card:hover .pp-cta::after { transform: scaleX(1); }
+  .pp-{{ uid }} .pp-cta svg { width: 14px; height: 14px; }
+
+  @media (max-width: 989px) {
+    .pp-{{ uid }} .pp-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 749px) {
+    .pp-{{ uid }} { padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px; }
+    .pp-{{ uid }} .pp-head { flex-direction: column; align-items: flex-start; gap: 14px; margin-bottom: 30px; }
+    .pp-{{ uid }} .pp-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .pp-{{ uid }} .pp-cta { opacity: 1; transform: none; }
+    .pp-{{ uid }} .pp-title { font-size: 13px; }
+  }
+</style>
+
+<div class="pp-{{ uid }}">
+  <div class="pp-inner">
+
+    <div class="pp-head">
+      <div>
+        {%- if section.settings.subheading != blank -%}
+          <div class="pp-subheading">{{ section.settings.subheading }}</div>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="pp-heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.show_viewall and coll != blank -%}
+        <a href="{{ coll.url }}" class="pp-viewall">
+          Tümünü Gör
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="pp-grid">
+      {%- if coll != blank -%}
+        {%- for product in coll.products limit: section.settings.limit -%}
+          <a href="{{ product.url }}" class="pp-card">
+            <div class="pp-media">
+              {%- if product.featured_image != blank -%}
+                <img
+                  src="{{ product.featured_image | image_url: width: 800 }}"
+                  srcset="
+                    {{ product.featured_image | image_url: width: 400 }} 400w,
+                    {{ product.featured_image | image_url: width: 600 }} 600w,
+                    {{ product.featured_image | image_url: width: 800 }} 800w
+                  "
+                  sizes="(max-width: 749px) 50vw, {{ 100 | divided_by: section.settings.columns }}vw"
+                  alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                  width="{{ product.featured_image.width }}"
+                  height="{{ product.featured_image.height }}"
+                  loading="lazy"
+                >
+                {%- if product.images[1] != blank -%}
+                  <img
+                    class="pp-img-hover"
+                    src="{{ product.images[1] | image_url: width: 800 }}"
+                    alt=""
+                    width="{{ product.images[1].width }}"
+                    height="{{ product.images[1].height }}"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+
+              {%- unless product.available -%}
+                <span class="pp-badge soldout">Tükendi</span>
+              {%- else -%}
+                {%- if product.compare_at_price > product.price -%}
+                  {%- assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+                  <span class="pp-badge">%{{ discount }} İndirim</span>
+                {%- endif -%}
+              {%- endunless -%}
+            </div>
+
+            <div class="pp-info">
+              {%- if section.settings.show_vendor -%}
+                <div class="pp-vendor">{{ product.vendor }}</div>
+              {%- endif -%}
+              <h3 class="pp-title">{{ product.title }}</h3>
+              <div class="pp-price">
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="was">{{ product.compare_at_price | money }}</span>
+                  <span class="now sale">{{ product.price | money }}</span>
+                {%- else -%}
+                  <span class="now">{{ product.price | money }}</span>
+                {%- endif -%}
+              </div>
+              <span class="pp-cta">
+                İncele
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
+            </div>
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          <div class="pp-card">
+            <div class="pp-media">{{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}</div>
+            <div class="pp-info">
+              <h3 class="pp-title">Örnek Ürün</h3>
+              <div class="pp-price"><span class="now">₺0,00</span></div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Premium Ürün Vitrini",
+  "class": "index-section",
+  "settings": [
+    { "type": "text", "id": "subheading", "label": "Üst Başlık", "default": "Öne Çıkanlar" },
+    { "type": "text", "id": "heading", "label": "Başlık", "default": "Çok Satanlar" },
+    { "type": "collection", "id": "collection", "label": "Koleksiyon" },
+    {
+      "type": "range", "id": "limit", "label": "Gösterilecek Ürün Sayısı",
+      "min": 2, "max": 12, "step": 1, "default": 4
+    },
+    {
+      "type": "range", "id": "columns", "label": "Sütun Sayısı (masaüstü)",
+      "min": 2, "max": 5, "step": 1, "default": 4
+    },
+    {
+      "type": "range", "id": "gap", "label": "Kartlar Arası Boşluk",
+      "min": 8, "max": 48, "step": 4, "unit": "px", "default": 24
+    },
+    {
+      "type": "range", "id": "radius", "label": "Köşe Yuvarlama",
+      "min": 0, "max": 32, "step": 2, "unit": "px", "default": 16
+    },
+    {
+      "type": "select", "id": "text_align", "label": "Kart Yazı Hizalama", "default": "left",
+      "options": [
+        { "value": "left", "label": "Sol" },
+        { "value": "center", "label": "Orta" }
+      ]
+    },
+    { "type": "checkbox", "id": "show_vendor", "label": "Marka Göster", "default": false },
+    { "type": "checkbox", "id": "show_viewall", "label": "\"Tümünü Gör\" Linki", "default": true },
+    { "type": "header", "content": "Renkler" },
+    { "type": "color", "id": "section_bg", "label": "Bölüm Arkaplanı", "default": "#ffffff" },
+    { "type": "color", "id": "heading_color", "label": "Yazı Rengi", "default": "#141414" },
+    { "type": "color", "id": "accent_color", "label": "Vurgu Rengi", "default": "#b8860b" },
+    { "type": "header", "content": "Boşluklar" },
+    {
+      "type": "range", "id": "padding_top", "label": "Üst Boşluk",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 60
+    },
+    {
+      "type": "range", "id": "padding_bottom", "label": "Alt Boşluk",
+      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 60
+    }
+  ],
+  "presets": [
+    { "name": "Premium Ürün Vitrini", "category": "Product" }
+  ]
+}
+{% endschema %}

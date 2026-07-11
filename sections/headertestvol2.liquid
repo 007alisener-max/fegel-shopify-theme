@@ -1,0 +1,560 @@
+{%- comment -%} premium-header.liquid — Ghost / Floating Pill + Arama Overlay {%- endcomment -%}
+
+{%- assign uid = section.id -%}
+{%- assign menu = section.settings.menu -%}
+
+<style>
+  .ph-{{ uid }} {
+    --ph-height: 84px;
+    --ph-accent: {{ section.settings.accent_color }};
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    transition: transform .6s cubic-bezier(.19,1,.22,1);
+  }
+  .ph-{{ uid }}.is-hidden { transform: translateY(-120%); }
+
+  .ph-{{ uid }} .ph-bar {
+    height: var(--ph-height);
+    display: flex; align-items: center; gap: 16px;
+    padding: 0 3vw;
+    color: {{ section.settings.text_color_ghost }};
+    background: transparent;
+    transition:
+      background .5s ease, color .5s ease, box-shadow .5s ease,
+      height .5s ease, margin .5s ease, border-radius .5s ease,
+      border-color .5s ease, max-width .5s ease;
+    border: 1px solid transparent;
+  }
+
+  /* --- Kaydırınca: süzülen buz camı kapsül --- */
+  .ph-{{ uid }}.is-scrolled .ph-bar {
+    height: 64px;
+    max-width: calc(100% - 32px);
+    margin: 12px auto 0;
+    padding: 0 10px 0 26px;
+    border-radius: 999px;
+    color: {{ section.settings.text_color }};
+    background: rgba({{ section.settings.bg_color.red }}, {{ section.settings.bg_color.green }}, {{ section.settings.bg_color.blue }}, .72);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-color: rgba({{ section.settings.text_color.red }}, {{ section.settings.text_color.green }}, {{ section.settings.text_color.blue }}, .08);
+    box-shadow: 0 18px 50px rgba(0,0,0,.14);
+  }
+
+  /* --- Logo --- */
+  .ph-{{ uid }} .ph-logo { display: flex; align-items: center; text-decoration: none; color: inherit; flex-shrink: 0; }
+  .ph-{{ uid }} .ph-logo img { display: block; width: {{ section.settings.logo_width }}px; height: auto; transition: width .5s ease; }
+  .ph-{{ uid }}.is-scrolled .ph-logo img { width: {{ section.settings.logo_width | times: 0.8 | round }}px; }
+  .ph-{{ uid }} .ph-logo span {
+    font-size: 20px; font-weight: 700; letter-spacing: .04em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 320px; line-height: 1;
+  }
+  .ph-{{ uid }}.is-scrolled .ph-logo span { font-size: 17px; max-width: 240px; }
+  .ph-{{ uid }} .ph-logo .ph-logo-light { display: block; }
+  .ph-{{ uid }} .ph-logo .ph-logo-dark { display: none; }
+  .ph-{{ uid }}.is-scrolled .ph-logo .ph-logo-light { display: none; }
+  .ph-{{ uid }}.is-scrolled .ph-logo .ph-logo-dark { display: block; }
+
+  /* --- Masaüstü menü --- */
+  .ph-{{ uid }} .ph-nav { display: flex; align-items: center; gap: 2px; margin: 0 auto; padding: 0; flex-wrap: nowrap; }
+  .ph-{{ uid }} .ph-nav > li { list-style: none; position: relative; }
+  .ph-{{ uid }} .ph-nav a {
+    display: flex; align-items: center; gap: 6px;
+    padding: 12px 11px;
+    font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600;
+    color: inherit; text-decoration: none; position: relative; white-space: nowrap;
+  }
+  .ph-{{ uid }} .ph-nav > li > a::after {
+    content: ""; position: absolute; left: 11px; right: 11px; bottom: 7px; height: 1px;
+    background: var(--ph-accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .45s cubic-bezier(.19,1,.22,1);
+  }
+  .ph-{{ uid }} .ph-nav > li:hover > a::after { transform: scaleX(1); }
+  .ph-{{ uid }} .ph-caret { width: 10px; height: 10px; opacity: .7; transition: transform .35s ease; }
+  .ph-{{ uid }} .ph-nav > li:hover .ph-caret { transform: rotate(180deg); }
+
+  /* --- Açılır menü: buz camı kart --- */
+  .ph-{{ uid }} .ph-sub {
+    position: absolute; top: calc(100% + 6px); left: 6px; min-width: 230px;
+    background: rgba(255,255,255,.86);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    color: #141414;
+    border-radius: 18px; padding: 12px;
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 24px 60px rgba(0,0,0,.16);
+    opacity: 0; visibility: hidden; transform: translateY(14px);
+    transition: opacity .4s ease, transform .45s cubic-bezier(.19,1,.22,1), visibility .45s;
+    list-style: none;
+  }
+  .ph-{{ uid }} .ph-nav li:hover > .ph-sub { opacity: 1; visibility: visible; transform: translateY(0); }
+  .ph-{{ uid }} .ph-sub li { list-style: none; position: relative; }
+  .ph-{{ uid }} .ph-sub a {
+    text-transform: none; letter-spacing: .01em; font-weight: 500; font-size: 14px;
+    padding: 10px 14px; border-radius: 10px;
+    transition: background .3s ease, padding-left .3s ease;
+    position: relative;
+  }
+  .ph-{{ uid }} .ph-sub a::before {
+    content: ""; position: absolute; left: 6px; top: 50%; width: 0; height: 1px;
+    background: var(--ph-accent);
+    transition: width .35s cubic-bezier(.19,1,.22,1);
+  }
+  .ph-{{ uid }} .ph-sub a:hover { background: rgba(0,0,0,.045); padding-left: 26px; }
+  .ph-{{ uid }} .ph-sub a:hover::before { width: 14px; }
+  .ph-{{ uid }} .ph-sub .ph-sub { top: -12px; left: calc(100% + 4px); }
+
+  /* --- İkonlar --- */
+  .ph-{{ uid }} .ph-icons { display: flex; align-items: center; gap: 4px; margin-left: auto; flex-shrink: 0; }
+  .ph-{{ uid }} .ph-icon {
+    width: 44px; height: 44px; display: grid; place-items: center;
+    color: inherit; border-radius: 50%; position: relative;
+    background: transparent; border: 1px solid transparent; cursor: pointer;
+    transition: background .35s ease, border-color .35s ease, transform .3s ease;
+  }
+  .ph-{{ uid }} .ph-icon:hover {
+    background: rgba(127,127,127,.12);
+    border-color: rgba(127,127,127,.18);
+    transform: translateY(-1px);
+  }
+  .ph-{{ uid }} .ph-icon svg { width: 20px; height: 20px; }
+  .ph-{{ uid }} .ph-count {
+    position: absolute; top: 1px; right: -1px;
+    min-width: 17px; height: 17px; padding: 0 4px;
+    background: var(--ph-accent); color: #fff;
+    font-size: 10px; font-weight: 700; border-radius: 999px;
+    display: grid; place-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  }
+
+  /* --- Mobil çekmece --- */
+  .ph-{{ uid }} .ph-burger { display: none; }
+  .ph-{{ uid }} .ph-drawer {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 200;
+    width: min(88vw, 380px);
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(26px) saturate(1.4);
+    -webkit-backdrop-filter: blur(26px) saturate(1.4);
+    color: #141414;
+    transform: translateX(-105%);
+    transition: transform .6s cubic-bezier(.19,1,.22,1);
+    padding: 26px 26px 40px; overflow-y: auto;
+    border-right: 1px solid rgba(0,0,0,.06);
+  }
+  .ph-{{ uid }} .ph-drawer.is-open { transform: translateX(0); }
+  .ph-{{ uid }} .ph-scrim {
+    position: fixed; inset: 0; z-index: 199; background: rgba(10,10,10,.5);
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+    opacity: 0; visibility: hidden; transition: opacity .45s ease, visibility .45s;
+  }
+  .ph-{{ uid }} .ph-scrim.is-open { opacity: 1; visibility: visible; }
+
+  .ph-{{ uid }} .ph-drawer-head {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
+  }
+  .ph-{{ uid }} .ph-drawer-sub {
+    font-size: 11px; letter-spacing: .28em; text-transform: uppercase; font-weight: 600;
+    color: var(--ph-accent); display: inline-flex; align-items: center; gap: 10px;
+    margin: 14px 0 18px;
+  }
+  .ph-{{ uid }} .ph-drawer-sub::after { content: ""; width: 36px; height: 1px; background: var(--ph-accent); opacity: .6; }
+
+  .ph-{{ uid }} .ph-m-item {
+    opacity: 0; transform: translateX(-16px);
+    transition: opacity .5s ease, transform .55s cubic-bezier(.19,1,.22,1);
+  }
+  .ph-{{ uid }} .ph-drawer.is-open .ph-m-item { opacity: 1; transform: translateX(0); }
+  {% for i in (1..12) %}
+  .ph-{{ uid }} .ph-drawer.is-open .ph-m-item:nth-child({{ i | plus: 2 }}) { transition-delay: {{ i | times: 0.05 | plus: 0.1 }}s; }
+  {% endfor %}
+
+  .ph-{{ uid }} .ph-drawer details { border-bottom: 1px solid rgba(0,0,0,.07); }
+  .ph-{{ uid }} .ph-drawer summary, .ph-{{ uid }} .ph-drawer .ph-m-link {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 4px; font-size: 15px; font-weight: 600;
+    color: #141414; text-decoration: none; cursor: pointer; list-style: none;
+    border-bottom: 1px solid rgba(0,0,0,.07);
+  }
+  .ph-{{ uid }} .ph-drawer details .ph-m-link,
+  .ph-{{ uid }} .ph-drawer details summary { border-bottom: 0; }
+  .ph-{{ uid }} .ph-drawer summary::-webkit-details-marker { display: none; }
+  .ph-{{ uid }} .ph-drawer summary svg { width: 14px; height: 14px; transition: transform .35s ease; color: var(--ph-accent); }
+  .ph-{{ uid }} .ph-drawer details[open] > summary svg { transform: rotate(180deg); }
+  .ph-{{ uid }} .ph-drawer .ph-m-sub { padding: 2px 0 14px 14px; }
+  .ph-{{ uid }} .ph-drawer .ph-m-sub a {
+    display: block; padding: 9px 4px; font-size: 14px; color: #454545; text-decoration: none;
+    transition: color .25s ease, padding-left .3s ease;
+  }
+  .ph-{{ uid }} .ph-drawer .ph-m-sub a:hover { color: var(--ph-accent); padding-left: 10px; }
+
+  /* --- Arama Overlay --- */
+  .ph-{{ uid }} .ph-search {
+    position: fixed; inset: 0; z-index: 210;
+    background: rgba(10, 10, 12, .55);
+    backdrop-filter: blur(22px) saturate(1.3);
+    -webkit-backdrop-filter: blur(22px) saturate(1.3);
+    display: flex; justify-content: center;
+    padding: 15vh 20px 40px;
+    opacity: 0; visibility: hidden;
+    transition: opacity .45s ease, visibility .45s;
+  }
+  .ph-{{ uid }} .ph-search.is-open { opacity: 1; visibility: visible; }
+  .ph-{{ uid }} .ph-search-close {
+    position: absolute; top: 24px; right: 28px; color: #fff;
+    border: 1px solid rgba(255,255,255,.25);
+  }
+  .ph-{{ uid }} .ph-search-panel {
+    width: min(680px, 100%);
+    transform: translateY(28px);
+    transition: transform .6s cubic-bezier(.19,1,.22,1);
+  }
+  .ph-{{ uid }} .ph-search.is-open .ph-search-panel { transform: translateY(0); }
+  .ph-{{ uid }} .ph-search-label {
+    font-size: 11px; letter-spacing: .3em; text-transform: uppercase; font-weight: 600;
+    color: var(--ph-accent); margin-bottom: 16px;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .ph-{{ uid }} .ph-search-label::after { content: ""; width: 40px; height: 1px; background: var(--ph-accent); opacity: .6; }
+  .ph-{{ uid }} .ph-search-form {
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,.3);
+    transition: border-color .4s ease;
+  }
+  .ph-{{ uid }} .ph-search-form:focus-within { border-color: var(--ph-accent); }
+  .ph-{{ uid }} .ph-search-input {
+    flex: 1; background: transparent; border: 0; outline: none;
+    font-size: clamp(22px, 3.4vw, 32px); font-weight: 500;
+    color: #fff; padding: 14px 0 18px;
+  }
+  .ph-{{ uid }} .ph-search-input::placeholder { color: rgba(255,255,255,.45); }
+  .ph-{{ uid }} .ph-search-input::-webkit-search-cancel-button { display: none; }
+  .ph-{{ uid }} .ph-search-submit { color: #fff; }
+
+  .ph-{{ uid }} .ph-search-results { margin-top: 22px; display: grid; gap: 8px; }
+  .ph-{{ uid }} .ph-search-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 10px 14px; border-radius: 14px; text-decoration: none;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.1);
+    opacity: 0; transform: translateY(12px);
+    animation: phSearchIn-{{ uid }} .5s cubic-bezier(.19,1,.22,1) forwards;
+    transition: background .3s ease, border-color .3s ease;
+  }
+  .ph-{{ uid }} .ph-search-item:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.25); }
+  {% for i in (1..8) %}
+  .ph-{{ uid }} .ph-search-item:nth-child({{ i }}) { animation-delay: {{ i | times: 0.05 }}s; }
+  {% endfor %}
+  @keyframes phSearchIn-{{ uid }} { to { opacity: 1; transform: translateY(0); } }
+  .ph-{{ uid }} .ph-search-item img {
+    width: 52px; height: 52px; object-fit: cover; border-radius: 10px; flex-shrink: 0;
+    background: rgba(255,255,255,.1);
+  }
+  .ph-{{ uid }} .ph-search-item .t { color: #fff; font-size: 14px; font-weight: 600; line-height: 1.35; }
+  .ph-{{ uid }} .ph-search-item .p { color: var(--ph-accent); font-size: 13px; font-weight: 600; margin-top: 3px; }
+  .ph-{{ uid }} .ph-search-all {
+    display: inline-flex; align-items: center; gap: 10px; margin-top: 10px;
+    color: #fff; text-decoration: none;
+    font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
+    border-bottom: 1px solid var(--ph-accent); padding-bottom: 5px;
+  }
+  .ph-{{ uid }} .ph-search-empty { color: rgba(255,255,255,.6); font-size: 14px; padding: 8px 2px; }
+
+  .ph-{{ uid }} .ph-spacer { height: var(--ph-height); }
+
+  @media (max-width: 989px) {
+    .ph-{{ uid }} { --ph-height: 66px; }
+    .ph-{{ uid }} .ph-nav { display: none; }
+    .ph-{{ uid }} .ph-burger { display: grid; }
+    .ph-{{ uid }} .ph-bar { gap: 10px; padding: 0 14px; }
+    .ph-{{ uid }} .ph-logo span { max-width: 46vw; }
+    .ph-{{ uid }}.is-scrolled .ph-bar {
+      height: 58px;
+      max-width: calc(100% - 20px);
+      margin-top: 8px;
+      padding: 0 6px 0 16px;
+    }
+    .ph-{{ uid }} .ph-search { padding-top: 10vh; }
+    .ph-{{ uid }} .ph-search-close { top: 16px; right: 16px; }
+  }
+</style>
+
+<header class="ph-{{ uid }}" id="PhHeader-{{ uid }}">
+  <div class="ph-bar">
+
+    <button class="ph-icon ph-burger" aria-label="Menü" data-ph-open>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M3 12h12M3 18h18"/></svg>
+    </button>
+
+    <a href="{{ routes.root_url }}" class="ph-logo">
+      {%- if section.settings.logo != blank -%}
+        {%- if section.settings.logo_light != blank and section.settings.ghost -%}
+          <img class="ph-logo-light" src="{{ section.settings.logo_light | image_url: width: 400 }}" alt="{{ shop.name | escape }}" width="{{ section.settings.logo_width }}" height="auto">
+          <img class="ph-logo-dark" src="{{ section.settings.logo | image_url: width: 400 }}" alt="{{ shop.name | escape }}" width="{{ section.settings.logo_width }}" height="auto">
+        {%- else -%}
+          <img src="{{ section.settings.logo | image_url: width: 400 }}" alt="{{ shop.name | escape }}" width="{{ section.settings.logo_width }}" height="auto">
+        {%- endif -%}
+      {%- else -%}
+        <span>{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    {%- if menu != blank -%}
+      <ul class="ph-nav">
+        {%- for link in menu.links -%}
+          <li>
+            <a href="{{ link.url }}">
+              {{ link.title }}
+              {%- if link.links.size > 0 -%}
+                <svg class="ph-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              {%- endif -%}
+            </a>
+            {%- if link.links.size > 0 -%}
+              <ul class="ph-sub">
+                {%- for child in link.links -%}
+                  <li>
+                    <a href="{{ child.url }}">{{ child.title }}</a>
+                    {%- if child.links.size > 0 -%}
+                      <ul class="ph-sub">
+                        {%- for grand in child.links -%}
+                          <li><a href="{{ grand.url }}">{{ grand.title }}</a></li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    <div class="ph-icons">
+      {%- if section.settings.show_search -%}
+        <button type="button" class="ph-icon" aria-label="Ara" data-ph-search-open>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </button>
+      {%- endif -%}
+      {%- if section.settings.show_account and shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="ph-icon" aria-label="Hesabım">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+        </a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="ph-icon" aria-label="Sepet">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 7h12l1.5 13.5h-15L6 7Z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+        {%- if cart.item_count > 0 -%}
+          <span class="ph-count">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+    </div>
+  </div>
+
+  {%- comment -%} Mobil çekmece {%- endcomment -%}
+  <div class="ph-scrim" data-ph-close></div>
+  <aside class="ph-drawer" aria-label="Mobil menü">
+    <div class="ph-drawer-head ph-m-item">
+      <strong style="letter-spacing:.04em;">{{ shop.name }}</strong>
+      <button class="ph-icon" aria-label="Kapat" data-ph-close style="color:#141414">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="ph-drawer-sub ph-m-item">Menü</div>
+    {%- if menu != blank -%}
+      {%- for link in menu.links -%}
+        <div class="ph-m-item">
+          {%- if link.links.size > 0 -%}
+            <details>
+              <summary>
+                {{ link.title }}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="ph-m-sub">
+                <a href="{{ link.url }}">Tümünü Gör</a>
+                {%- for child in link.links -%}
+                  <a href="{{ child.url }}">{{ child.title }}</a>
+                  {%- for grand in child.links -%}
+                    <a href="{{ grand.url }}" style="padding-left:16px;">— {{ grand.title }}</a>
+                  {%- endfor -%}
+                {%- endfor -%}
+              </div>
+            </details>
+          {%- else -%}
+            <a class="ph-m-link" href="{{ link.url }}">{{ link.title }}</a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </aside>
+
+  {%- comment -%} Arama overlay {%- endcomment -%}
+  <div class="ph-search" data-ph-search>
+    <button class="ph-icon ph-search-close" aria-label="Kapat" data-ph-search-close>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <div class="ph-search-panel">
+      <div class="ph-search-label">Arama</div>
+      <form action="{{ routes.search_url }}" method="get" role="search" class="ph-search-form">
+        <input
+          type="search"
+          name="q"
+          class="ph-search-input"
+          placeholder="Ne aramıştınız?"
+          autocomplete="off"
+          aria-label="Ara"
+        >
+        <input type="hidden" name="options[prefix]" value="last">
+        <button type="submit" class="ph-icon ph-search-submit" aria-label="Ara">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </button>
+      </form>
+      <div class="ph-search-results" data-ph-search-results></div>
+    </div>
+  </div>
+</header>
+
+{%- unless section.settings.ghost -%}
+  <div class="ph-{{ uid }}-spacer" style="height: 84px;"></div>
+  <style>
+    .ph-{{ uid }} .ph-bar {
+      color: {{ section.settings.text_color }};
+      background: {{ section.settings.bg_color }};
+    }
+    @media (max-width: 989px) { .ph-{{ uid }}-spacer { height: 66px; } }
+  </style>
+{%- endunless -%}
+
+<script>
+  (function () {
+    var root = document.getElementById('PhHeader-{{ uid }}');
+    if (!root || root.dataset.init) return;
+    root.dataset.init = '1';
+
+    var drawer = root.querySelector('.ph-drawer');
+    var scrim = root.querySelector('.ph-scrim');
+    var lastY = window.scrollY;
+
+    root.querySelectorAll('[data-ph-open]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        drawer.classList.add('is-open'); scrim.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    root.querySelectorAll('[data-ph-close]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        drawer.classList.remove('is-open'); scrim.classList.remove('is-open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    /* --- Arama overlay --- */
+    var search = root.querySelector('[data-ph-search]');
+    var searchInput = search.querySelector('.ph-search-input');
+    var searchResults = search.querySelector('[data-ph-search-results]');
+    var searchTimer = null;
+
+    function openSearch() {
+      search.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function () { searchInput.focus(); }, 350);
+    }
+    function closeSearch() {
+      search.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    root.querySelectorAll('[data-ph-search-open]').forEach(function (b) {
+      b.addEventListener('click', openSearch);
+    });
+    root.querySelectorAll('[data-ph-search-close]').forEach(function (b) {
+      b.addEventListener('click', closeSearch);
+    });
+    search.addEventListener('click', function (e) {
+      if (e.target === search) closeSearch();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && search.classList.contains('is-open')) closeSearch();
+    });
+
+    searchInput.addEventListener('input', function () {
+      var q = searchInput.value.trim();
+      clearTimeout(searchTimer);
+      if (q.length < 2) { searchResults.innerHTML = ''; return; }
+      searchTimer = setTimeout(function () {
+        fetch('/search/suggest.json?q=' + encodeURIComponent(q) + '&resources[type]=product&resources[limit]=6')
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            var products = data.resources.results.products || [];
+            if (!products.length) {
+              searchResults.innerHTML = '<div class="ph-search-empty">Sonuç bulunamadı.</div>';
+              return;
+            }
+            var html = products.map(function (p) {
+              var img = p.featured_image && p.featured_image.url
+                ? '<img src="' + p.featured_image.url + '&width=120" alt="" loading="lazy">'
+                : '<span style="width:52px;height:52px;border-radius:10px;background:rgba(255,255,255,.1);flex-shrink:0;"></span>';
+              return '<a class="ph-search-item" href="' + p.url + '">' + img +
+                '<span><span class="t">' + p.title + '</span>' +
+                '<span class="p" style="display:block;">' + p.price + '</span></span></a>';
+            }).join('');
+            html += '<a class="ph-search-all" href="{{ routes.search_url }}?q=' + encodeURIComponent(q) + '">Tüm sonuçları gör →</a>';
+            searchResults.innerHTML = html;
+          })
+          .catch(function () {});
+      }, 280);
+    });
+
+    /* --- Scroll davranışı --- */
+    function onScroll() {
+      var y = window.scrollY;
+      root.classList.toggle('is-scrolled', y > 40);
+
+      {% if section.settings.hide_on_scroll %}
+      if (y > 300 && y > lastY + 6 && !drawer.classList.contains('is-open')) {
+        root.classList.add('is-hidden');
+      } else if (y < lastY - 6 || y <= 300) {
+        root.classList.remove('is-hidden');
+      }
+      {% endif %}
+
+      lastY = y;
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Premium Header",
+  "class": "section-header",
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "image_picker", "id": "logo_light", "label": "Logo — Beyaz Versiyon", "info": "Hayalet moddayken en üstte gösterilir. Boşsa normal logo kullanılır." },
+    {
+      "type": "range", "id": "logo_width", "label": "Logo Genişliği",
+      "min": 60, "max": 300, "step": 10, "unit": "px", "default": 140
+    },
+    { "type": "link_list", "id": "menu", "label": "Menü", "default": "main-menu" },
+    {
+      "type": "checkbox", "id": "ghost", "label": "Hayalet Mod (Ghost Header)",
+      "default": true,
+      "info": "En üstte şeffaf durur, kaydırınca süzülen cam kapsüle dönüşür. Kapalıysa klasik dolgun header olur."
+    },
+    {
+      "type": "checkbox", "id": "hide_on_scroll", "label": "Aşağı Kaydırınca Gizle",
+      "default": true,
+      "info": "Aşağı inerken kaybolur, yukarı kaydırınca geri gelir."
+    },
+    { "type": "checkbox", "id": "show_search", "label": "Arama İkonu", "default": true },
+    { "type": "checkbox", "id": "show_account", "label": "Hesap İkonu", "default": true },
+    { "type": "header", "content": "Renkler" },
+    { "type": "color", "id": "bg_color", "label": "Kapsül / Arkaplan Rengi", "default": "#ffffff" },
+    { "type": "color", "id": "text_color", "label": "Yazı Rengi", "default": "#141414" },
+    { "type": "color", "id": "text_color_ghost", "label": "Yazı Rengi (hayalet mod)", "default": "#ffffff" },
+    { "type": "color", "id": "accent_color", "label": "Vurgu Rengi", "default": "#b8860b" }
+  ],
+  "presets": [{ "name": "Premium Header" }]
+}
+{% endschema %}

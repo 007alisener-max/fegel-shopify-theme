@@ -1,0 +1,355 @@
+{%- comment -%} premium-slider.liquid {%- endcomment -%}
+
+{%- assign uid = section.id -%}
+{%- assign total = section.blocks.size -%}
+
+<style>
+  .ps-{{ uid }} { position: relative; }
+  .ps-{{ uid }} .ps-frame {
+    position: relative; overflow: hidden;
+    height: {{ section.settings.height }};
+    min-height: 420px;
+    {% if section.settings.setwidth == 'container' %}
+      max-width: 1320px; margin: 0 auto;
+      border-radius: {{ section.settings.radius }}px;
+    {% endif %}
+  }
+
+  .ps-{{ uid }} .ps-slide {
+    position: absolute; inset: 0;
+    opacity: 0; visibility: hidden; z-index: 1;
+    transition: opacity 1.1s ease, visibility 1.1s ease;
+  }
+  .ps-{{ uid }} .ps-slide.is-active { opacity: 1; visibility: visible; z-index: 2; }
+
+  .ps-{{ uid }} .ps-slide img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transform: scale(1.12);
+    transition: transform 7s cubic-bezier(.19, 1, .22, 1);
+  }
+  .ps-{{ uid }} .ps-slide.is-active img { transform: scale(1); }
+
+  .ps-{{ uid }} .ps-overlay {
+    position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(
+      to top,
+      rgba({{ section.settings.overlay_color.red }}, {{ section.settings.overlay_color.green }}, {{ section.settings.overlay_color.blue }}, {{ section.settings.overlay_opacity }}) 0%,
+      rgba({{ section.settings.overlay_color.red }}, {{ section.settings.overlay_color.green }}, {{ section.settings.overlay_color.blue }}, {{ section.settings.overlay_opacity | times: 0.35 }}) 100%
+    );
+  }
+
+  .ps-{{ uid }} .ps-content {
+    position: absolute; inset: 0; z-index: 3;
+    display: flex; align-items: center;
+    padding: 0 8vw 90px;
+  }
+  .ps-{{ uid }} .ps-content.h-center { justify-content: center; text-align: center; }
+  .ps-{{ uid }} .ps-content.h-right  { justify-content: flex-end; text-align: right; }
+
+  .ps-{{ uid }} .ps-box { max-width: 620px; }
+  .ps-{{ uid }} .ps-el {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity .9s ease, transform .9s cubic-bezier(.19, 1, .22, 1);
+  }
+  .ps-{{ uid }} .ps-slide.is-active .ps-el { opacity: 1; transform: translateY(0); }
+  .ps-{{ uid }} .ps-slide.is-active .ps-el:nth-child(1) { transition-delay: .25s; }
+  .ps-{{ uid }} .ps-slide.is-active .ps-el:nth-child(2) { transition-delay: .40s; }
+  .ps-{{ uid }} .ps-slide.is-active .ps-el:nth-child(3) { transition-delay: .55s; }
+  .ps-{{ uid }} .ps-slide.is-active .ps-el:nth-child(4) { transition-delay: .70s; }
+
+  .ps-{{ uid }} .ps-sub {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 12px; letter-spacing: .3em; text-transform: uppercase; font-weight: 600;
+    margin-bottom: 18px;
+  }
+  .ps-{{ uid }} .ps-sub::before { content: ""; width: 42px; height: 1px; background: currentColor; opacity: .7; }
+  .ps-{{ uid }} .ps-content.h-center .ps-sub::after { content: ""; width: 42px; height: 1px; background: currentColor; opacity: .7; }
+
+  .ps-{{ uid }} .ps-title { font-size: clamp(32px, 5vw, 64px); line-height: 1.08; margin: 0 0 18px; }
+  .ps-{{ uid }} .ps-desc { font-size: 16px; line-height: 1.7; opacity: .9; margin: 0 0 28px; max-width: 480px; }
+  .ps-{{ uid }} .ps-content.h-center .ps-desc { margin-left: auto; margin-right: auto; }
+
+  .ps-{{ uid }} .ps-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 13px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600;
+    color: inherit; text-decoration: none;
+    padding: 16px 34px; border: 1px solid currentColor; border-radius: 999px;
+    transition: background .5s ease, color .5s ease;
+  }
+  .ps-{{ uid }} .ps-btn:hover { background: #fff; color: #111 !important; border-color: #fff; }
+  .ps-{{ uid }} .ps-btn svg { width: 16px; height: 16px; transition: transform .4s ease; }
+  .ps-{{ uid }} .ps-btn:hover svg { transform: translateX(5px); }
+
+  .ps-{{ uid }} .ps-nav {
+    position: absolute; z-index: 4; right: 8vw; bottom: 36px;
+    display: flex; align-items: center; gap: 18px;
+    color: #fff;
+  }
+  .ps-{{ uid }} .ps-counter { font-size: 13px; letter-spacing: .15em; opacity: .9; }
+  .ps-{{ uid }} .ps-arrow {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: grid; place-items: center; cursor: pointer;
+    background: rgba(255,255,255,.08);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.25); color: #fff;
+    transition: background .4s ease, transform .3s ease;
+  }
+  .ps-{{ uid }} .ps-arrow:hover { background: rgba(255,255,255,.22); transform: scale(1.06); }
+  .ps-{{ uid }} .ps-arrow svg { width: 18px; height: 18px; }
+
+  .ps-{{ uid }} .ps-dots {
+    position: absolute; z-index: 4; left: 8vw; bottom: 56px;
+    display: flex; gap: 10px;
+  }
+  .ps-{{ uid }} .ps-dot {
+    width: 34px; height: 3px; border-radius: 3px; cursor: pointer;
+    background: rgba(255,255,255,.3); border: 0; padding: 0;
+    position: relative; overflow: hidden;
+  }
+  .ps-{{ uid }} .ps-dot::after {
+    content: ""; position: absolute; inset: 0;
+    background: #fff; transform: scaleX(0); transform-origin: left;
+  }
+  .ps-{{ uid }} .ps-dot.is-active::after {
+    {% if section.settings.autoplay > 0 %}
+      animation: psFill-{{ uid }} {{ section.settings.autoplay }}s linear forwards;
+    {% else %}
+      transform: scaleX(1);
+    {% endif %}
+  }
+  .ps-{{ uid }} .ps-frame:hover .ps-dot.is-active::after { animation-play-state: paused; }
+  @keyframes psFill-{{ uid }} { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  @media (max-width: 749px) {
+    .ps-{{ uid }} .ps-frame { height: {{ section.settings.height_mobile }}; min-height: 380px; }
+    .ps-{{ uid }} .ps-content { padding: 0 24px 110px; }
+    .ps-{{ uid }} .ps-nav { right: 24px; bottom: 30px; }
+    .ps-{{ uid }} .ps-dots { left: 24px; bottom: 48px; }
+    .ps-{{ uid }} .ps-arrow { width: 42px; height: 42px; }
+  }
+</style>
+
+<div class="ps-{{ uid }}">
+  <div class="ps-frame" id="PsSlider-{{ uid }}">
+
+    {%- for block in section.blocks -%}
+      <div
+        class="ps-slide {% if forloop.first %}is-active{% endif %}"
+        data-block-id="{{ block.id }}"
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.image != blank -%}
+          <picture>
+            {%- if block.settings.image_mobile != blank -%}
+              <source
+                media="(max-width: 749px)"
+                srcset="{{ block.settings.image_mobile | image_url: width: 900 }}"
+              >
+            {%- endif -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 1920 }}"
+              srcset="
+                {{ block.settings.image | image_url: width: 1100 }} 1100w,
+                {{ block.settings.image | image_url: width: 1920 }} 1920w,
+                {{ block.settings.image | image_url: width: 2400 }} 2400w
+              "
+              sizes="100vw"
+              alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
+              {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+            >
+          </picture>
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+
+        <span class="ps-overlay"></span>
+
+        <div class="ps-content h-{{ block.settings.horizontal }}" style="color: {{ block.settings.text_color }};">
+          <div class="ps-box">
+            {%- if block.settings.subtitle != blank -%}
+              <div class="ps-el"><span class="ps-sub">{{ block.settings.subtitle }}</span></div>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+              <h2 class="ps-el ps-title">{{ block.settings.title }}</h2>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <div class="ps-el ps-desc">{{ block.settings.description }}</div>
+            {%- endif -%}
+            {%- if block.settings.button_text != blank -%}
+              <div class="ps-el">
+                <a href="{{ block.settings.button_link | default: '#' }}" class="ps-btn">
+                  {{ block.settings.button_text }}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+
+    {%- if total > 1 -%}
+      <div class="ps-dots">
+        {%- for block in section.blocks -%}
+          <button class="ps-dot {% if forloop.first %}is-active{% endif %}" aria-label="Slayt {{ forloop.index }}"></button>
+        {%- endfor -%}
+      </div>
+
+      <div class="ps-nav">
+        <span class="ps-counter">
+          <span class="ps-counter-current">01</span>
+          &nbsp;/&nbsp;{% if total < 10 %}0{{ total }}{% else %}{{ total }}{% endif %}
+        </span>
+        <button class="ps-arrow ps-prev" aria-label="Önceki slayt">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        </button>
+        <button class="ps-arrow ps-next" aria-label="Sonraki slayt">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('PsSlider-{{ uid }}');
+    if (!root || root.dataset.init) return;
+    root.dataset.init = '1';
+
+    var slides = Array.prototype.slice.call(root.querySelectorAll('.ps-slide'));
+    var dots = Array.prototype.slice.call(root.querySelectorAll('.ps-dot'));
+    var counter = root.querySelector('.ps-counter-current');
+    var delay = {{ section.settings.autoplay | times: 1000 }};
+    var index = 0;
+    var timer = null;
+
+    if (slides.length < 2) return;
+
+    function go(n) {
+      index = (n + slides.length) % slides.length;
+      slides.forEach(function (s, k) { s.classList.toggle('is-active', k === index); });
+      dots.forEach(function (d, k) {
+        d.classList.remove('is-active');
+        if (k === index) { void d.offsetWidth; d.classList.add('is-active'); }
+      });
+      if (counter) counter.textContent = String(index + 1).padStart(2, '0');
+      restart();
+    }
+
+    function restart() {
+      if (!delay) return;
+      clearInterval(timer);
+      timer = setInterval(function () { go(index + 1); }, delay);
+    }
+
+    root.querySelector('.ps-prev').addEventListener('click', function () { go(index - 1); });
+    root.querySelector('.ps-next').addEventListener('click', function () { go(index + 1); });
+    dots.forEach(function (d, k) { d.addEventListener('click', function () { go(k); }); });
+
+    root.addEventListener('mouseenter', function () { clearInterval(timer); });
+    root.addEventListener('mouseleave', restart);
+
+    var startX = null;
+    root.addEventListener('pointerdown', function (e) { startX = e.clientX; });
+    root.addEventListener('pointerup', function (e) {
+      if (startX === null) return;
+      var dx = e.clientX - startX;
+      startX = null;
+      if (Math.abs(dx) > 45) go(index + (dx < 0 ? 1 : -1));
+    });
+
+    document.addEventListener('shopify:block:select', function (e) {
+      var k = slides.findIndex(function (s) { return s.dataset.blockId === e.detail.blockId; });
+      if (k > -1) go(k);
+    });
+
+    restart();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Premium Slider",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select", "id": "setwidth", "label": "Genişlik", "default": "full",
+      "options": [
+        { "value": "full", "label": "Tam Genişlik" },
+        { "value": "container", "label": "Kutulu" }
+      ]
+    },
+    {
+      "type": "range", "id": "radius", "label": "Köşe Yuvarlama (kutulu modda)",
+      "min": 0, "max": 32, "step": 2, "unit": "px", "default": 20
+    },
+    {
+      "type": "select", "id": "height", "label": "Yükseklik (masaüstü)", "default": "80vh",
+      "options": [
+        { "value": "100vh", "label": "Tam Ekran" },
+        { "value": "80vh", "label": "Büyük" },
+        { "value": "65vh", "label": "Orta" },
+        { "value": "50vh", "label": "Küçük" }
+      ]
+    },
+    {
+      "type": "select", "id": "height_mobile", "label": "Yükseklik (mobil)", "default": "70vh",
+      "options": [
+        { "value": "90vh", "label": "Büyük" },
+        { "value": "70vh", "label": "Orta" },
+        { "value": "55vh", "label": "Küçük" }
+      ]
+    },
+    {
+      "type": "range", "id": "autoplay", "label": "Otomatik Geçiş Süresi",
+      "min": 0, "max": 10, "step": 1, "unit": "sn", "default": 6,
+      "info": "0 = otomatik geçiş kapalı"
+    },
+    { "type": "header", "content": "Overlay (Karartma)" },
+    { "type": "color", "id": "overlay_color", "label": "Overlay Rengi", "default": "#000000" },
+    {
+      "type": "range", "id": "overlay_opacity", "label": "Overlay Yoğunluğu",
+      "min": 0, "max": 0.9, "step": 0.1, "default": 0.5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slayt",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Görsel" },
+        { "type": "image_picker", "id": "image_mobile", "label": "Mobil Görsel (opsiyonel)" },
+        { "type": "text", "id": "subtitle", "label": "Alt Başlık", "default": "Yeni Sezon" },
+        { "type": "text", "id": "title", "label": "Başlık", "default": "Slayt Başlığı" },
+        { "type": "textarea", "id": "description", "label": "Açıklama" },
+        { "type": "text", "id": "button_text", "label": "Buton Metni", "default": "Keşfet" },
+        { "type": "url", "id": "button_link", "label": "Buton Linki" },
+        { "type": "color", "id": "text_color", "label": "Yazı Rengi", "default": "#ffffff" },
+        {
+          "type": "select", "id": "horizontal", "label": "İçerik Konumu", "default": "left",
+          "options": [
+            { "value": "left", "label": "Sol" },
+            { "value": "center", "label": "Orta" },
+            { "value": "right", "label": "Sağ" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Slider",
+      "category": "Image",
+      "blocks": [
+        { "type": "slide" },
+        { "type": "slide" },
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}
