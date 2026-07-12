@@ -18,27 +18,20 @@
           "type": "menu",
           "settings": {
             "heading": "Kategoriler",
-            "menu": ""
-          }
-        },
-        "menu_QJTNzG": {
-          "type": "menu",
-          "settings": {
-            "heading": "Kategoriler",
-            "menu": ""
+            "menu": "main-menu",
+            "hidden_titles": "PROJE, BAYİ TALEP FORMU"
           }
         }
       },
       "block_order": [
-        "menu_dwpyGr",
-        "menu_QJTNzG"
+        "menu_dwpyGr"
       ],
       "name": "Premium Footer",
       "settings": {
         "logo": "shopify://shop_images/Fegel_Logo.avif",
         "logo_width": 140,
         "about": "Kalite ve konforu bir araya getiren ürünlerimizle hayatınızı kolaylaştırıyoruz.",
-        "instagram": "",
+        "instagram": "https://www.instagram.com/fegelcomfort",
         "facebook": "",
         "youtube": "",
         "whatsapp": "",
@@ -46,7 +39,7 @@
         "newsletter_heading": "Bülten",
         "newsletter_text": "Yeni ürünler ve kampanyalardan ilk siz haberdar olun.",
         "show_payments": true,
-        "bg_color": "#bbbbbb",
+        "bg_color": "#ffffff",
         "text_color": "#141414",
         "accent_color": "#b8860b"
       }

@@ -123,6 +123,19 @@
   list-style-type:none;
 }
 
+/* === Fegel minimal beyaz banner === */
+.collection-banner{ background:#ffffff; }
+.collection-hero-container{ min-height:auto !important; }
+.collection-hero-container.py-5{ padding-top:2.6rem !important; padding-bottom:1.4rem !important; }
+.collection-hero__title{ font-weight:600; letter-spacing:.01em; position:relative; padding-bottom:16px; margin-bottom:0; }
+.collection-hero__title::after{ content:""; display:block; width:44px; height:2px; background:#b8860b; margin:14px auto 0; }
+.breadcrumbs-collection{ position:static !important; padding-top:1.6rem !important; padding-bottom:0 !important; }
+.breadcrumbs-collection .breadcrumbs{ display:flex; justify-content:center; font-size:11px; letter-spacing:.16em; text-transform:uppercase; }
+.breadcrumbs-collection .breadcrumbs__list{ display:flex; justify-content:center; margin:0; padding:0; }
+.breadcrumbs-collection a{ color:#9a9a9a; }
+.breadcrumbs-collection a:hover{ color:#b8860b; }
+.breadcrumbs-collection span{ color:#141414; }
+
 </style>
 <div class="collection-banner position-relative">
   {%- if show_breadcrumb -%}

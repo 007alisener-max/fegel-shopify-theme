@@ -7,6 +7,7 @@
     --psb-accent: {{ section.settings.accent_color }};
     padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
     background: {{ section.settings.section_bg }};
+    {%- if section.settings.top_divider %}border-top: 1px solid {{ section.settings.divider_color }};{% endif -%}
   }
   .psb-{{ uid }} .psb-frame {
     position: relative; overflow: hidden; isolation: isolate;
@@ -227,6 +228,8 @@
     { "type": "color", "id": "section_bg", "label": "Bölüm Arkaplanı", "default": "#ffffff" },
     { "type": "color", "id": "text_color", "label": "Yazı Rengi", "default": "#ffffff" },
     { "type": "color", "id": "accent_color", "label": "Vurgu Rengi", "default": "#b8860b" },
+    { "type": "checkbox", "id": "top_divider", "label": "Üst ayrım çizgisi", "default": true },
+    { "type": "color", "id": "divider_color", "label": "Ayrım çizgisi rengi", "default": "#ececec" },
     { "type": "color", "id": "overlay_color", "label": "Overlay Rengi", "default": "#000000" },
     {
       "type": "range", "id": "overlay_opacity", "label": "Overlay Yoğunluğu",

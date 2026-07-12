@@ -13,10 +13,40 @@
     assign himg = '100%' 
   endcase 
 -%}
+{%- assign _pg = section.settings.post_gap | default: 0 -%}
+{%- assign _pr = section.settings.post_radius | default: 0 -%}
+{%- if section.settings.top_divider or _pg > 0 or _pr > 0 -%}
+<style>
+{%- if section.settings.top_divider %}.customstyle{{ section.id }}{ border-top: 1px solid {{ section.settings.divider_color | default: '#ececec' }}; }{% endif %}
+{%- if _pg > 0 %}.customstyle{{ section.id }} .instagramoff-item{ margin-left: {{ _pg | divided_by: 2.0 }}px; margin-right: {{ _pg | divided_by: 2.0 }}px; }{% endif %}
+{%- if _pr > 0 %}.customstyle{{ section.id }} .instagramoff-item{ border-radius: {{ _pr }}px; overflow: hidden; }{% endif %}
+</style>
+{%- endif -%}
 <div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}" style="--h-image-insta:{{ himg }};">
   <div class="{{ section.settings.setwidth }}">
     {%- render 'style-section' -%}
   <div class="section-block">
+    {%- if section.settings.show_ig_icon -%}
+      {%- assign _iglink = section.settings.ig_link | default: 'https://www.instagram.com/fegelcomfort' -%}
+      {%- assign _ighandle = section.settings.ig_handle | default: '@fegelcomfort' -%}
+      {%- assign _al = section.settings['align-heading'] -%}
+      {%- assign _igcolor = section.settings.ig_icon_color | default: '#b8860b' -%}
+      <style>
+        .ig-head-{{ section.id }} { display:flex; align-items:center; gap:16px; margin:0 0 26px; {% if _al == 'center' %}justify-content:center;{% elsif _al == 'right' %}justify-content:flex-end;{% else %}justify-content:flex-start;{% endif %} }
+        .ig-badge-{{ section.id }} { display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:50%; border:1px solid {{ _igcolor }}; color:{{ _igcolor }}; flex:0 0 auto; transition:background .4s cubic-bezier(.19,1,.22,1), color .4s cubic-bezier(.19,1,.22,1), transform .4s cubic-bezier(.19,1,.22,1); text-decoration:none; }
+        .ig-badge-{{ section.id }}:hover { background:{{ _igcolor }}; color:#fff; transform:translateY(-2px); }
+        .ig-badge-{{ section.id }} svg { width:26px; height:26px; display:block; }
+        .ig-badge-{{ section.id }} svg, .ig-badge-{{ section.id }} svg * { fill:none !important; stroke:currentColor !important; }
+        .ig-head-{{ section.id }} .section-title-1 { margin:0; }
+        .ig-head-{{ section.id }} .ig-handle-link { text-decoration:none; color:inherit; }
+      </style>
+      <div class="ig-head-{{ section.id }}">
+        <a href="{{ _iglink }}" target="_blank" rel="noopener" class="ig-badge-{{ section.id }}" aria-label="Instagram - {{ _ighandle | escape }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        <h3 class="section-title-1"><a href="{{ _iglink }}" target="_blank" rel="noopener" class="ig-handle-link"><span>{{ _ighandle }}</span></a></h3>
+      </div>
+    {%- endif -%}
     {%- render 'section-heading' -%}
     <div class="instagramoff-wrapper dots-negative">
       <div class="instagramoff-slider mb-0  {% if section.settings.padding == false %} row mx-0 {% else %} row{% endif %}" id="service-list-{{ section.id }}"
@@ -297,6 +327,65 @@
       ],
       "default": "square",
       "label": "Image ratio"
+    },
+    {
+      "type": "checkbox",
+      "id": "top_divider",
+      "label": "Üst ayrım çizgisi",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Ayrım çizgisi rengi",
+      "default": "#ececec"
+    },
+    {
+      "type": "range",
+      "id": "post_gap",
+      "label": "Postlar arası boşluk",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "post_radius",
+      "label": "Post köşe yuvarlaması",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Instagram İkonu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_ig_icon",
+      "label": "Başlıkta Instagram ikonu göster",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "ig_icon_color",
+      "label": "İkon rengi",
+      "default": "#b8860b"
+    },
+    {
+      "type": "url",
+      "id": "ig_link",
+      "label": "Instagram profil linki"
+    },
+    {
+      "type": "text",
+      "id": "ig_handle",
+      "label": "Kullanıcı adı (ikon yanında)",
+      "default": "@fegelcomfort"
     },
     {
       "type": "header",

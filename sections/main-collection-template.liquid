@@ -21,6 +21,99 @@
   }
 {%- endstyle -%}
 
+{%- comment -%} === Fegel minimal beyaz ürün kartı (yalnız bu bölüme scope) === {%- endcomment -%}
+<style>
+  #shopify-section-{{ section.id }} .product-card{
+    background:#ffffff;
+    border:1px solid transparent;
+    border-radius:12px;
+    padding-bottom:6px;
+    transition:transform .5s cubic-bezier(.19,1,.22,1), box-shadow .5s cubic-bezier(.19,1,.22,1), border-color .4s ease;
+  }
+  #shopify-section-{{ section.id }} .product-card:hover{
+    transform:translateY(-4px);
+    border-color:#ececec;
+    box-shadow:0 14px 34px -20px rgba(20,16,36,.28);
+  }
+  #shopify-section-{{ section.id }} .product-card__image-wr{
+    border-radius:12px;
+    overflow:hidden;
+    background:#f6f6f4;
+  }
+  /* Sabit 4:5 oran + kırpmasız contain → tüm kartlar aynı yükseklik */
+  #shopify-section-{{ section.id }} .product-card__image{
+    padding-top:125% !important;
+    background:transparent;
+    display:block;
+  }
+  #shopify-section-{{ section.id }} .product-card__image img{
+    position:absolute !important;
+    top:0; left:0; right:0; bottom:0;
+    width:100% !important; height:100% !important;
+    object-fit:contain !important;
+    padding:16px;
+    box-sizing:border-box;
+  }
+  #shopify-section-{{ section.id }} .product-card__info{
+    padding:16px 14px 4px;
+  }
+  #shopify-section-{{ section.id }} .product-card__name{
+    font-size:14px;
+    line-height:1.45;
+    font-weight:500;
+    color:#1a1a1a;
+    letter-spacing:.01em;
+    transition:color .3s ease;
+  }
+  #shopify-section-{{ section.id }} .product-card__name:hover{ color:#b8860b; }
+  #shopify-section-{{ section.id }} .product-card__price{ margin-top:4px; }
+  /* Sepete Ekle — minimal koyu buton, altın hover */
+  #shopify-section-{{ section.id }} .product-card-cart .btn{
+    background:#141024 !important;
+    background-image:none !important;
+    color:#ffffff !important;
+    border:none !important;
+    border-radius:8px;
+    box-shadow:none !important;
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    transition:background .35s ease;
+  }
+  #shopify-section-{{ section.id }} .product-card-cart .btn:hover{ background:#b8860b !important; }
+
+  /* --- Filtre & sıralama araç çubuğu (minimal) --- */
+  #shopify-section-{{ section.id }} .facets-vertical-sort{
+    border-bottom:1px solid #ececec;
+    padding-bottom:12px;
+    margin-bottom:12px;
+  }
+  #shopify-section-{{ section.id }} .drawer-collapse-btn .mobile-facets__open{
+    font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#141414; cursor:pointer;
+    transition:color .3s ease;
+  }
+  #shopify-section-{{ section.id }} .drawer-collapse-btn .mobile-facets__open:hover{ color:#b8860b; }
+  #shopify-section-{{ section.id }} .product-count__text{
+    font-size:12px; letter-spacing:.08em; color:#9a9a9a; text-transform:uppercase;
+  }
+  #shopify-section-{{ section.id }} .facet-filters__label label{
+    font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#9a9a9a;
+  }
+  #shopify-section-{{ section.id }} .facet-filters__sort{
+    border:none !important; background:transparent; font-size:13px; color:#141414; font-weight:500; cursor:pointer;
+  }
+  #shopify-section-{{ section.id }} .js-btn-view.active{ color:#b8860b !important; }
+  #shopify-section-{{ section.id }} .js-btn-view.active svg,
+  #shopify-section-{{ section.id }} .js-btn-view.active path{ fill:#b8860b !important; }
+
+  /* --- Izgara ritmi (kartlar arası nefes payı) --- */
+  #shopify-section-{{ section.id }} #product-grid > li{ margin-bottom:34px; }
+  @media (max-width:749px){
+    #shopify-section-{{ section.id }} #product-grid > li{ margin-bottom:22px; }
+    #shopify-section-{{ section.id }} .product-card__info{ padding:12px 8px 4px; }
+  }
+</style>
+
 
 {%- liquid
   assign size_image_grid = settings.size_image_grid

@@ -60,7 +60,7 @@
   .ps-{{ uid }} .ps-content.h-center { justify-content: center; text-align: center; }
   .ps-{{ uid }} .ps-content.h-right  { justify-content: flex-end; text-align: right; }
 
-  .ps-{{ uid }} .ps-box { max-width: 620px; }
+  .ps-{{ uid }} .ps-box { max-width: 620px; width: 100%; }
   .ps-{{ uid }} .ps-el {
     opacity: 0; transform: translateY(28px);
     transition: opacity .9s ease, transform .9s cubic-bezier(.19, 1, .22, 1);
@@ -79,8 +79,18 @@
   .ps-{{ uid }} .ps-sub::before { content: ""; width: 42px; height: 1px; background: currentColor; opacity: .7; }
   .ps-{{ uid }} .ps-content.h-center .ps-sub::after { content: ""; width: 42px; height: 1px; background: currentColor; opacity: .7; }
 
-  .ps-{{ uid }} .ps-title { font-size: clamp(32px, 5vw, 64px); line-height: 1.08; margin: 0 0 18px; }
-  .ps-{{ uid }} .ps-desc { font-size: 16px; line-height: 1.7; opacity: .9; margin: 0 0 28px; max-width: 480px; }
+  .ps-{{ uid }} .ps-title {
+    font-size: clamp(32px, 5vw, 64px) !important;
+    line-height: 1.1 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    font-weight: 600 !important;
+    color: inherit !important;
+    margin: 0 0 18px !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+  }
+  .ps-{{ uid }} .ps-desc { font-size: 16px !important; line-height: 1.7 !important; opacity: .9; margin: 0 0 28px !important; max-width: 480px; letter-spacing: normal !important; color: inherit !important; }
   .ps-{{ uid }} .ps-content.h-center .ps-desc { margin-left: auto; margin-right: auto; }
 
   .ps-{{ uid }} .ps-btn {
@@ -152,7 +162,35 @@
         data-block-id="{{ block.id }}"
         {{ block.shopify_attributes }}
       >
-        {%- if block.settings.image != blank -%}
+        {%- if block.settings.image_asset != blank -%}
+          <picture>
+            {%- comment -%} Masaüstü: asset banner · Mobil: asset-mobil varsa o, yoksa image_picker görseli (eski hâl) {%- endcomment -%}
+            <source media="(min-width: 750px)" srcset="{{ block.settings.image_asset | asset_url }}">
+            {%- if block.settings.image_asset_mobile != blank -%}
+              <source media="(max-width: 749px)" srcset="{{ block.settings.image_asset_mobile | asset_url }}">
+            {%- endif -%}
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 1920 }}"
+                srcset="
+                  {{ block.settings.image | image_url: width: 1100 }} 1100w,
+                  {{ block.settings.image | image_url: width: 1920 }} 1920w
+                "
+                sizes="100vw"
+                alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}"
+                {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+              >
+            {%- else -%}
+              <img
+                src="{{ block.settings.image_asset | asset_url }}"
+                alt="{{ block.settings.title | escape }}"
+                {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+              >
+            {%- endif -%}
+          </picture>
+        {%- elsif block.settings.image != blank -%}
           <picture>
             {%- if block.settings.image_mobile != blank -%}
               <source
@@ -337,6 +375,8 @@
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Görsel" },
         { "type": "image_picker", "id": "image_mobile", "label": "Mobil Görsel (opsiyonel)" },
+        { "type": "text", "id": "image_asset", "label": "Tema asset görseli (opsiyonel)", "info": "assets/ içindeki dosya adı. Girilirse üstteki Görsel'in yerine kullanılır." },
+        { "type": "text", "id": "image_asset_mobile", "label": "Tema asset mobil görsel (opsiyonel)", "info": "assets/ içindeki mobil dosya adı." },
         { "type": "text", "id": "subtitle", "label": "Alt Başlık", "default": "Yeni Sezon" },
         { "type": "text", "id": "title", "label": "Başlık", "default": "Slayt Başlığı" },
         { "type": "textarea", "id": "description", "label": "Açıklama" },

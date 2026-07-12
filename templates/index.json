@@ -39,9 +39,9 @@
         "tb4": {
           "type": "item",
           "settings": {
-            "icon": "tools",
-            "title": "Kapıda Kurulum",
-            "subtitle": "Uzman ekip"
+            "icon": "bolt",
+            "title": "Hızlı Teslimat",
+            "subtitle": "1-3 İş Günü"
           }
         }
       },
@@ -66,13 +66,14 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Ev_Sporu_Banner_1920x864_v2_82cd39a8-4393-41ed-b1dc-af2e0f5d0325.png",
-            "subtitle": "",
-            "title": "",
-            "description": "",
+            "subtitle": "FEGEL FITNESS",
+            "title": "Evinde Profesyonel Antrenman",
+            "description": "Sessiz motor, katlanabilir tasarım. Fegel koşu bantlarıyla evinde formda kal.",
             "button_text": "HEMEN KEŞFET",
             "button_link": "shopify://collections/kosu-bandi",
             "text_color": "#ffffff",
-            "horizontal": "left"
+            "horizontal": "left",
+            "image_asset": "ev-sporu-banner.png"
           }
         },
         "slide_qEiVBe": {
@@ -108,7 +109,6 @@
         "slide_tg47Vn"
       ],
       "custom_css": [
-        ".ps-el {position: absolute; bottom: 100px; /* alttan mesafe */ right: 1750px; /* sağdan mesafe */}",
         ".ps-arrow {color: #1b2a4a; border-color: #1b2a4a; background: rgba(27, 42, 74, 0.12);}",
         ".ps-arrow:hover {background: #1b2a4a; color: #ffffff; border-color: #1b2a4a;}",
         ".ps-counter {color: #1b2a4a;}"
@@ -129,7 +129,7 @@
       "name": "Premium Tekli Banner",
       "settings": {
         "image": "shopify://shop_images/replicate-prediction-f8ybebakwxrmr0cz8vp9eg8df4.webp",
-        "subtitle": "FG-03",
+        "subtitle": "SEZON ÖZEL",
         "title": "Yaz sezonu özel",
         "description": "",
         "button_text": "Hemen İncele",
@@ -141,11 +141,12 @@
         "radius": 32,
         "height": "80vh",
         "height_mobile": "55vh",
-        "section_bg": "#bbbbbb",
+        "section_bg": "#ffffff",
         "text_color": "#ffffff",
-        "accent_color": "#000000",
-        "overlay_color": "#ffe100",
-        "overlay_opacity": 0.5,
+        "accent_color": "#b8860b",
+        "top_divider": false,
+        "overlay_color": "#141024",
+        "overlay_opacity": 0.32,
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -164,7 +165,7 @@
         "text_align": "left",
         "show_vendor": false,
         "show_viewall": true,
-        "section_bg": "#bbbbbb",
+        "section_bg": "#ffffff",
         "heading_color": "#120d36",
         "accent_color": "#b8860b",
         "padding_top": 60,
@@ -227,7 +228,7 @@
       ],
       "name": "Premium Banner",
       "settings": {
-        "subheading": "--------",
+        "subheading": "KATEGORİLER",
         "heading": "Koleksiyonları Keşfet",
         "head_align": "center",
         "setwidth": "container",
@@ -235,7 +236,7 @@
         "gap": 24,
         "radius": 16,
         "ratio": "3/4",
-        "section_bg": "#bbbbbb",
+        "section_bg": "#ffffff",
         "accent_color": "#b8860b",
         "overlay_color": "#000000",
         "overlay_opacity": 0.3,
@@ -311,9 +312,16 @@
       "settings": {
         "animation": "fade-up",
         "setwidth": "container-fluid",
-        "bgsection": "#bbbbbb",
-        "title_top": "BİZİ TAKİP EDİN",
-        "title": "@fegelcomfort",
+        "bgsection": "#ffffff",
+        "top_divider": true,
+        "divider_color": "#ececec",
+        "post_gap": 14,
+        "post_radius": 12,
+        "show_ig_icon": true,
+        "ig_icon_color": "#b8860b",
+        "ig_link": "https://www.instagram.com/fegelcomfort",
+        "title_top": "",
+        "title": "",
         "des": "",
         "align-heading": "center",
         "image_size": "square",
@@ -326,7 +334,8 @@
         "paddingsection": "60px 0px 60px 0px",
         "paddingmobile": "60px 0px 60px 0px",
         "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
+        "marginmobile": "0px 0px 0px 0px",
+        "ig_handle": "/Fegelcomfort"
       }
     },
     "test4_WxK3Uh": {
@@ -399,12 +408,13 @@
         "heading": "Bizi Tercih Edenler",
         "gap": 24,
         "radius": 18,
-        "section_bg": "#bbbbbb",
+        "section_bg": "#ffffff",
         "card_bg": "#ffffff",
         "text_color": "#141414",
         "accent_color": "#b8860b",
         "padding_top": 60,
-        "padding_bottom": 60
+        "padding_bottom": 60,
+        "per_view": 4
       }
     }
   },

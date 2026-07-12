@@ -1,6 +1,9 @@
 {%- comment -%} premium-testimonials.liquid {%- endcomment -%}
 
 {%- assign uid = section.id -%}
+{%- assign pv = section.settings.per_view | default: 3 -%}
+{%- assign pv_gaps = pv | minus: 1 -%}
+{%- assign pv_totgap = section.settings.gap | times: pv_gaps -%}
 
 <style>
   .pt-{{ uid }} {
@@ -8,6 +11,7 @@
     background: {{ section.settings.section_bg }};
     color: {{ section.settings.text_color }};
     padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    {%- if section.settings.top_divider %}border-top: 1px solid {{ section.settings.divider_color }};{% endif -%}
     overflow: hidden;
   }
   .pt-{{ uid }} .pt-inner { max-width: 1320px; margin: 0 auto; padding: 0 20px; }
@@ -53,7 +57,7 @@
 
   /* --- Kart --- */
   .pt-{{ uid }} .pt-card {
-    flex: 0 0 calc((100% - {{ section.settings.gap | times: 2 }}px) / 3);
+    flex: 0 0 calc((100% - {{ pv_totgap }}px) / {{ pv }});
     scroll-snap-align: start;
     position: relative;
     border-radius: {{ section.settings.radius }}px;
@@ -221,6 +225,10 @@
     { "type": "text", "id": "subheading", "label": "Üst Başlık", "default": "Müşterilerimiz" },
     { "type": "text", "id": "heading", "label": "Başlık", "default": "Bizi Tercih Edenler" },
     {
+      "type": "range", "id": "per_view", "label": "Masaüstünde Görünen Kart (adet)",
+      "min": 2, "max": 5, "step": 1, "default": 3
+    },
+    {
       "type": "range", "id": "gap", "label": "Kartlar Arası Boşluk",
       "min": 12, "max": 40, "step": 4, "unit": "px", "default": 24
     },
@@ -233,6 +241,8 @@
     { "type": "color", "id": "card_bg", "label": "Kart Arkaplanı", "default": "#ffffff" },
     { "type": "color", "id": "text_color", "label": "Yazı Rengi", "default": "#141414" },
     { "type": "color", "id": "accent_color", "label": "Vurgu Rengi", "default": "#b8860b" },
+    { "type": "checkbox", "id": "top_divider", "label": "Üst ayrım çizgisi", "default": true },
+    { "type": "color", "id": "divider_color", "label": "Ayrım çizgisi rengi", "default": "#ececec" },
     { "type": "header", "content": "Boşluklar" },
     {
       "type": "range", "id": "padding_top", "label": "Üst Boşluk",
