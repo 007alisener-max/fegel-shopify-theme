@@ -9,6 +9,76 @@
  */
 {
   "sections": {
+    "test2_nCBjaa": {
+      "type": "test2",
+      "blocks": {
+        "slide_TTPhqN": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Ev_Sporu_Banner_1920x864_v2_82cd39a8-4393-41ed-b1dc-af2e0f5d0325.png",
+            "image_asset": "kosu-bandi-banner.png",
+            "image_asset_mobile": "",
+            "subtitle": "FEGEL FITNESS",
+            "title": "Evinde Profesyonel Antrenman",
+            "description": "Sessiz motor, katlanabilir tasarım. Fegel koşu bantlarıyla evinde formda kal.",
+            "button_text": "HEMEN KEŞFET",
+            "button_link": "shopify://collections/kosu-bandi",
+            "text_color": "#ffffff",
+            "horizontal": "left"
+          }
+        },
+        "slide_qEiVBe": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Fegel_Comfort_Banner_1920x864_a727d865-7226-44b6-92b2-75e771a055a2.png",
+            "image_asset": "hava-temizleyici-banner.png",
+            "image_asset_mobile": "",
+            "subtitle": "FEGEL COMFORT",
+            "title": "Evinde Her Nefes Tertemiz",
+            "description": "H13 HEPA filtresiyle toz, polen ve alerjenlere son. Fegel hava temizleyicilerle daha sağlıklı bir ev.",
+            "button_text": "HEMEN KEŞFET",
+            "button_link": "shopify://collections/hava-temizleyici",
+            "text_color": "#ffffff",
+            "horizontal": "left"
+          }
+        },
+        "slide_tg47Vn": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Fegel_Comfort_Masaj_Banner_1920x864_d364b371-6fef-498d-8213-0811ae56d69b.jpg",
+            "image_asset": "masaj-koltugu-banner.png",
+            "image_asset_mobile": "",
+            "subtitle": "FEGEL COMFORT",
+            "title": "Sıfır Yerçekimi, Tam Rahatlama",
+            "description": "Tam vücut masajı ve ısı terapisiyle günün yorgunluğunu üzerinden at. Fegel akıllı masaj koltukları evinde.",
+            "button_text": "HEMEN KEŞFET",
+            "button_link": "shopify://collections/masaj-koltugu",
+            "text_color": "#ffffff",
+            "horizontal": "left"
+          }
+        }
+      },
+      "block_order": [
+        "slide_TTPhqN",
+        "slide_qEiVBe",
+        "slide_tg47Vn"
+      ],
+      "custom_css": [
+        ".ps-arrow {color: #1b2a4a; border-color: #1b2a4a; background: rgba(27, 42, 74, 0.12);}",
+        ".ps-arrow:hover {background: #1b2a4a; color: #ffffff; border-color: #1b2a4a;}",
+        ".ps-counter {color: #1b2a4a;}"
+      ],
+      "name": "Premium Slider",
+      "settings": {
+        "setwidth": "full",
+        "radius": 20,
+        "height": "100vh",
+        "height_mobile": "70vh",
+        "autoplay": 6,
+        "overlay_color": "#0b17b8",
+        "overlay_opacity": 0
+      }
+    },
     "trustbar_fg01": {
       "type": "premium-trustbar",
       "blocks": {
@@ -59,94 +129,30 @@
         "padding_y": 20
       }
     },
-    "test2_nCBjaa": {
-      "type": "test2",
-      "blocks": {
-        "slide_TTPhqN": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Ev_Sporu_Banner_1920x864_v2_82cd39a8-4393-41ed-b1dc-af2e0f5d0325.png",
-            "subtitle": "FEGEL FITNESS",
-            "title": "Evinde Profesyonel Antrenman",
-            "description": "Sessiz motor, katlanabilir tasarım. Fegel koşu bantlarıyla evinde formda kal.",
-            "button_text": "HEMEN KEŞFET",
-            "button_link": "shopify://collections/kosu-bandi",
-            "text_color": "#ffffff",
-            "horizontal": "left",
-            "image_asset": "ev-sporu-banner.png"
-          }
-        },
-        "slide_qEiVBe": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Fegel_Comfort_Banner_1920x864_a727d865-7226-44b6-92b2-75e771a055a2.png",
-            "subtitle": "",
-            "title": "",
-            "description": "",
-            "button_text": "HEMEN KEŞFET",
-            "button_link": "shopify://collections/hava-temizleyici",
-            "text_color": "#ffffff",
-            "horizontal": "left"
-          }
-        },
-        "slide_tg47Vn": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Fegel_Comfort_Masaj_Banner_1920x864_d364b371-6fef-498d-8213-0811ae56d69b.jpg",
-            "subtitle": "",
-            "title": "",
-            "description": "",
-            "button_text": "HEMEN KEŞFET",
-            "button_link": "shopify://collections/masaj-koltugu",
-            "text_color": "#ffffff",
-            "horizontal": "left"
-          }
-        }
-      },
-      "block_order": [
-        "slide_TTPhqN",
-        "slide_qEiVBe",
-        "slide_tg47Vn"
-      ],
-      "custom_css": [
-        ".ps-arrow {color: #1b2a4a; border-color: #1b2a4a; background: rgba(27, 42, 74, 0.12);}",
-        ".ps-arrow:hover {background: #1b2a4a; color: #ffffff; border-color: #1b2a4a;}",
-        ".ps-counter {color: #1b2a4a;}"
-      ],
-      "name": "Premium Slider",
-      "settings": {
-        "setwidth": "full",
-        "radius": 20,
-        "height": "80vh",
-        "height_mobile": "70vh",
-        "autoplay": 6,
-        "overlay_color": "#0b17b8",
-        "overlay_opacity": 0
-      }
-    },
     "test5_bx3fPC": {
       "type": "test5",
       "name": "Premium Tekli Banner",
       "settings": {
-        "image": "shopify://shop_images/replicate-prediction-f8ybebakwxrmr0cz8vp9eg8df4.webp",
-        "subtitle": "SEZON ÖZEL",
+        "image": "shopify://shop_images/replicate-prediction-6vzfcqwdd5rmy0czb9e83h738c.png",
+        "subtitle": "Sezon özel",
         "title": "Yaz sezonu özel",
         "description": "",
         "button_text": "Hemen İncele",
         "button_link": "",
         "horizontal": "left",
         "glass": false,
-        "kenburns": true,
+        "kenburns": false,
         "setwidth": "container",
         "radius": 32,
         "height": "80vh",
         "height_mobile": "55vh",
         "section_bg": "#ffffff",
         "text_color": "#ffffff",
-        "accent_color": "#b8860b",
+        "accent_color": "#0B0BB8",
         "top_divider": false,
-        "overlay_color": "#141024",
-        "overlay_opacity": 0.32,
+        "divider_color": "#FFFFFF",
+        "overlay_color": "#FFE100",
+        "overlay_opacity": 0.7,
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -168,6 +174,8 @@
         "section_bg": "#ffffff",
         "heading_color": "#120d36",
         "accent_color": "#b8860b",
+        "top_divider": true,
+        "divider_color": "#ececec",
         "padding_top": 60,
         "padding_bottom": 60
       }
@@ -193,7 +201,7 @@
         "banner_zQGHrw": {
           "type": "banner",
           "settings": {
-            "image": "shopify://shop_images/FG_01_Pembe_8265c93b-8de9-4d12-8e2d-6f7971e9fb9e.jpg",
+            "image": "shopify://shop_images/FG-13-1_1.png",
             "subtitle": "Öne Çıkan",
             "title": "masaj aletleri",
             "description": "",
@@ -208,7 +216,7 @@
         "banner_aQYCbE": {
           "type": "banner",
           "settings": {
-            "image": "shopify://shop_images/FG_6500_B_2_325dbf33-6d33-434e-bf58-540c3d0e9179.jpg",
+            "image": "shopify://shop_images/FG-13-1_3.png",
             "subtitle": "Öne Çıkan",
             "title": "Spor & Fitness",
             "description": "",
@@ -238,6 +246,8 @@
         "ratio": "3/4",
         "section_bg": "#ffffff",
         "accent_color": "#b8860b",
+        "top_divider": true,
+        "divider_color": "#ececec",
         "overlay_color": "#000000",
         "overlay_opacity": 0.3,
         "padding_top": 60,
@@ -313,6 +323,11 @@
         "animation": "fade-up",
         "setwidth": "container-fluid",
         "bgsection": "#ffffff",
+        "title_top": "",
+        "title": "",
+        "des": "",
+        "align-heading": "center",
+        "image_size": "square",
         "top_divider": true,
         "divider_color": "#ececec",
         "post_gap": 14,
@@ -320,11 +335,7 @@
         "show_ig_icon": true,
         "ig_icon_color": "#b8860b",
         "ig_link": "https://www.instagram.com/fegelcomfort",
-        "title_top": "",
-        "title": "",
-        "des": "",
-        "align-heading": "center",
-        "image_size": "square",
+        "ig_handle": "/Fegelcomfort",
         "arrows": false,
         "draggable": true,
         "dots": true,
@@ -334,8 +345,7 @@
         "paddingsection": "60px 0px 60px 0px",
         "paddingmobile": "60px 0px 60px 0px",
         "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px",
-        "ig_handle": "/Fegelcomfort"
+        "marginmobile": "0px 0px 0px 0px"
       }
     },
     "test4_WxK3Uh": {
@@ -406,15 +416,17 @@
       "settings": {
         "subheading": "Müşterilerimiz",
         "heading": "Bizi Tercih Edenler",
+        "per_view": 4,
         "gap": 24,
         "radius": 18,
         "section_bg": "#ffffff",
         "card_bg": "#ffffff",
         "text_color": "#141414",
         "accent_color": "#b8860b",
+        "top_divider": true,
+        "divider_color": "#ececec",
         "padding_top": 60,
-        "padding_bottom": 60,
-        "per_view": 4
+        "padding_bottom": 60
       }
     }
   },
