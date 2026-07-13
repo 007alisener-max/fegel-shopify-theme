@@ -511,9 +511,14 @@
     });
 
     /* --- Scroll davranışı --- */
+    // Duyuru barı varsa header'i onun altina yerlestir; kaydirinca yukari yapissin.
+    var annBar = document.querySelector('.header-announcement');
     function onScroll() {
       var y = window.scrollY;
       root.classList.toggle('is-scrolled', y > 40);
+
+      var annH = annBar ? annBar.offsetHeight : 0;
+      root.style.top = (annH > 0 ? Math.max(0, annH - y) : 0) + 'px';
 
       {% if section.settings.hide_on_scroll %}
       if (y > 300 && y > lastY + 6 && !drawer.classList.contains('is-open')) {
