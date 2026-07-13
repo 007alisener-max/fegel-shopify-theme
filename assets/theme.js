@@ -5623,17 +5623,21 @@ theme.noticeSoldout = (function(){
 
 // Sticky cart
 theme.stickyCart = (function() {
-  var $anchor = $('#js-anchor-sticky-cart'),
-      $stickyCartWrapper = $('.sticky-cart-wr');
+  var $stickyCartWrapper = $('.sticky-cart-wr'),
+      $trigger = $('[id^="AddToCart-"]').first();
 
-  if ($anchor.length) {
+  // Fallback: eski anchor (buton yoksa)
+  if (!$trigger.length) {
+    $trigger = $('#js-anchor-sticky-cart');
+  }
+
+  if ($trigger.length && $stickyCartWrapper.length) {
     function handleStickyCart() {
-      var anchorTop = $anchor.offset().top,
-          anchorHeight = $anchor.outerHeight(),
-          windowHeight = $(window).height(),
+      var triggerBottom = $trigger.offset().top + $trigger.outerHeight(),
           windowScroll = $(window).scrollTop();
 
-      $stickyCartWrapper.toggleClass('active', windowScroll > (anchorTop + anchorHeight - windowHeight));
+      // Sepete Ekle butonu ekranin ustunden cikinca sticky cubugu goster
+      $stickyCartWrapper.toggleClass('active', windowScroll > triggerBottom);
     }
 
     $(window).on('scroll', handleStickyCart);

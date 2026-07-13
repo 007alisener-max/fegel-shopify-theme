@@ -29,6 +29,12 @@
     endif
     -%}
     <style>
+        /* Swatch uygulamasi (gsw) tema kucuk resim seridini gizliyor; carousel icin geri goster */
+        .gsw-swatch-installed .photos.photos-thumb-bottom .photos__item.photos__item--thumbs,
+        .gsw-swatch-installed .photos.photos-thumb-left .photos__item.photos__item--thumbs,
+        .gsw-swatch-installed .photos.photos-thumb-right .photos__item.photos__item--thumbs{
+            display: block !important;
+        }
         .photos-thumb-left .photos__item--main{
             position: relative;
             flex: 1 1 auto;
@@ -131,7 +137,7 @@
     </style>
 <div class="photos {{ layout_style }}">
     <div class="photos__item photos__item--main" data-aos="fade">
-      <div class="my-gallery mb-0" itemscope itemtype="http://schema.org/ImageGallery">
+      <div class="my-gallery mb-0 gallery-wrap{{ section.id }}" itemscope itemtype="http://schema.org/ImageGallery">
         
         {%- for media in product.media -%}
         {%- liquid

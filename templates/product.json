@@ -290,9 +290,9 @@
       "custom_css": [],
       "settings": {
         "setwidth": "container-fluid",
-        "media_style": "media-nothumb",
+        "media_style": "media-bottom",
         "media_size": "small",
-        "image_size": "auto",
+        "image_size": "square",
         "enable_video_looping": true,
         "stock_enable": false,
         "sizeguide_enable": true,
