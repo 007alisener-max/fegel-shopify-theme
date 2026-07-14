@@ -129,7 +129,7 @@
     "predictive_search_show_vendor": false,
     "predictive_search_show_price": true,
     "productgrid": "product-9",
-    "size_image_grid": "auto",
+    "size_image_grid": "portrait",
     "t_product": false,
     "second_image": true,
     "enable_review": false,

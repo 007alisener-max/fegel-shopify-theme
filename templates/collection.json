@@ -158,7 +158,7 @@
       "settings": {
         "collection_width": "container-fluid",
         "products_per_page": 12,
-        "collection_perrow": "3",
+        "collection_perrow": "4",
         "type_pagination": "scroll",
         "enable_viewcolumn": true,
         "enable_filtering": true,
