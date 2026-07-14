@@ -10,7 +10,7 @@
     padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
     {%- if section.settings.top_divider %}border-top: 1px solid {{ section.settings.divider_color }};{% endif -%}
   }
-  .pp-{{ uid }} .pp-inner { max-width: 1320px; margin: 0 auto; padding: 0 20px; }
+  .pp-{{ uid }} .pp-inner { max-width: {% if section.settings.full_width %}none{% else %}1320px{% endif %}; margin: 0 auto; padding: 0 {% if section.settings.full_width %}clamp(20px, 3vw, 56px){% else %}20px{% endif %}; }
 
   /* --- Başlık alanı --- */
   .pp-{{ uid }} .pp-head {
@@ -109,6 +109,11 @@
   .pp-{{ uid }} .pp-card:hover .pp-cta::after { transform: scaleX(1); }
   .pp-{{ uid }} .pp-cta svg { width: 14px; height: 14px; }
 
+  @media (min-width: 990px) and (max-width: 1300px) {
+    {%- if section.settings.columns > 4 -%}
+    .pp-{{ uid }} .pp-grid { grid-template-columns: repeat(4, 1fr); }
+    {%- endif -%}
+  }
   @media (max-width: 989px) {
     .pp-{{ uid }} .pp-grid { grid-template-columns: repeat(2, 1fr); }
   }
@@ -119,6 +124,11 @@
     .pp-{{ uid }} .pp-cta { opacity: 1; transform: none; }
     .pp-{{ uid }} .pp-title { font-size: 13px; }
   }
+  {%- if section.settings.head_align == 'center' -%}
+  .pp-{{ uid }} .pp-head { flex-direction: column; align-items: center; text-align: center; gap: 16px; }
+  .pp-{{ uid }} .pp-subheading::after { content: ""; width: 36px; height: 1px; background: var(--pp-accent); opacity: .6; }
+  .pp-{{ uid }} .pp-viewall { margin-top: 2px; }
+  {%- endif -%}
 </style>
 
 <div class="pp-{{ uid }}">
@@ -234,8 +244,9 @@
     },
     {
       "type": "range", "id": "columns", "label": "Sütun Sayısı (masaüstü)",
-      "min": 2, "max": 5, "step": 1, "default": 4
+      "min": 2, "max": 8, "step": 1, "default": 4
     },
+    { "type": "checkbox", "id": "full_width", "label": "Tam Genişlik", "default": false },
     {
       "type": "range", "id": "gap", "label": "Kartlar Arası Boşluk",
       "min": 8, "max": 48, "step": 4, "unit": "px", "default": 24
@@ -243,6 +254,13 @@
     {
       "type": "range", "id": "radius", "label": "Köşe Yuvarlama",
       "min": 0, "max": 32, "step": 2, "unit": "px", "default": 16
+    },
+    {
+      "type": "select", "id": "head_align", "label": "Başlık Hizalama", "default": "left",
+      "options": [
+        { "value": "left", "label": "Sol" },
+        { "value": "center", "label": "Orta" }
+      ]
     },
     {
       "type": "select", "id": "text_align", "label": "Kart Yazı Hizalama", "default": "left",
