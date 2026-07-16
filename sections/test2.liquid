@@ -20,7 +20,7 @@
   .ps-{{ uid }} .ps-frame {
     position: relative; overflow: hidden;
     width: 100%;
-    aspect-ratio: 20 / 9;
+    aspect-ratio: 20 / 6;
     max-height: {{ section.settings.height }};
     min-height: 420px;
     {% if section.settings.setwidth == 'container' %}
@@ -37,7 +37,7 @@
   .ps-{{ uid }} .ps-slide.is-active { opacity: 1; visibility: visible; z-index: 2; }
 
   .ps-{{ uid }} .ps-slide img {
-    width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;
+    width: 100%; height: 100%; object-fit: cover; object-position: 50% var(--oy, 50%); display: block;
     transform: scale(1.04);
     transition: transform 8s cubic-bezier(.19, 1, .22, 1);
   }
@@ -160,6 +160,7 @@
       <div
         class="ps-slide {% if forloop.first %}is-active{% endif %}"
         data-block-id="{{ block.id }}"
+        style="--oy: {{ block.settings.focus_y | default: 50 }}%;"
         {{ block.shopify_attributes }}
       >
         {%- if block.settings.image_asset != blank -%}
@@ -379,6 +380,7 @@
         { "type": "text", "id": "image_asset_mobile", "label": "Tema asset mobil görsel (opsiyonel)", "info": "assets/ içindeki mobil dosya adı." },
         { "type": "text", "id": "subtitle", "label": "Alt Başlık", "default": "Yeni Sezon" },
         { "type": "textarea", "id": "title", "label": "Başlık", "info": "Alt satıra geçmek için Enter'a bas (her satır ayrı görünür).", "default": "Slayt Başlığı" },
+        { "type": "range", "id": "focus_y", "label": "Görsel kırpma hizası (dikey)", "info": "0 = üstü koru (altı kırp), 100 = altı koru (üstü kırp). Slider kısa oranlı olduğunda etkilidir.", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50 },
         { "type": "textarea", "id": "description", "label": "Açıklama" },
         { "type": "text", "id": "button_text", "label": "Buton Metni", "default": "Keşfet" },
         { "type": "url", "id": "button_link", "label": "Buton Linki" },
