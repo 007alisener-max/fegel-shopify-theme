@@ -1,0 +1,34 @@
+{%- comment -%}
+  Bir medyanin alt metnine bakip urunun secenek degerlerinden hangisine ait
+  oldugunu bulur ve o degeri (kucuk harf) yazdirir. Eslesme yoksa bos doner
+  => o gorsel "ortak" sayilir ve her varyantta gosterilir.
+
+  Birden fazla deger eslesirse en uzunu kazanir ("Mavi" vs "Koyu Mavi" gibi
+  ic ice gecen degerlerde dogru olani secmek icin).
+
+  Kullanim:
+    {%- capture m_color -%}
+      {%- render 'media-color-tag', media: media, product: product -%}
+    {%- endcapture -%}
+{%- endcomment -%}
+{%- liquid
+  assign m_alt = media.alt | default: '' | downcase
+  assign m_color = ''
+
+  if m_alt != blank
+    for opt in product.options_with_values
+      for val in opt.values
+        assign v = val | downcase | strip
+        if v != blank and m_alt contains v
+          assign v_size = v | size
+          assign c_size = m_color | size
+          if v_size > c_size
+            assign m_color = v
+          endif
+        endif
+      endfor
+    endfor
+  endif
+
+  echo m_color
+-%}

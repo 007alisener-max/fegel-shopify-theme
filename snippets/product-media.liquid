@@ -29,6 +29,14 @@
     endif
     -%}
     <style>
+        /* Globo swatch uygulamasi galeriyi kendi kuralina gore gizliyor: varyanta
+           atanmis TEK gorseli birakip ayni renge ait digerlerini de sakliyor.
+           Filtrelemeyi alt metne gore biz yapiyoruz (variant-media-filter.js),
+           bu yuzden uygulamanin gizlemesini etkisiz birak. */
+        .my-gallery .product-single__photo.globo-sw-media--hide,
+        .product-single__thumbnails .product-single__thumbnail-item.globo-sw-media--hide{
+            display: block !important;
+        }
         /* Swatch uygulamasi (gsw) tema kucuk resim seridini gizliyor; carousel icin geri goster */
         .gsw-swatch-installed .photos.photos-thumb-bottom .photos__item.photos__item--thumbs,
         .gsw-swatch-installed .photos.photos-thumb-left .photos__item.photos__item--thumbs,
@@ -135,19 +143,24 @@
             }
         }
     </style>
-<div class="photos {{ layout_style }}">
+{%- liquid
+  # Varyant-galeri filtresi: secili varyantin secenek degerleri (bkz. variant-media-filter.js)
+  assign vmf_selected = product.selected_or_first_available_variant.options | join: '|' | downcase
+-%}
+<div class="photos {{ layout_style }}" data-vmf-section="{{ section.id }}" data-vmf-selected="{{ vmf_selected | escape }}">
     <div class="photos__item photos__item--main" data-aos="fade">
       <div class="my-gallery mb-0 gallery-wrap{{ section.id }}" itemscope itemtype="http://schema.org/ImageGallery">
-        
+
         {%- for media in product.media -%}
-        {%- liquid
-          assign image = media
-        -%}
+        {%- assign image = media -%}
+        {%- capture m_color -%}{%- render 'media-color-tag', media: media, product: product -%}{%- endcapture -%}
+        {%- assign m_color = m_color | strip -%}
         {% case media.media_type %}
         {% when 'image' %}
-            <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" 
+            <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject"
               class="photo-image {% if image == featured_image %}  slick-current {% endif %} product-single__photo product__photo-container product__photo-container-{{ section.id }} "
                 id="ProductPhoto{{ section.id }}"
+                data-media-color="{{ m_color | escape }}"
                 data-image-id="{{ image.id }}">
                 <a href="{{ image | image_url: width: 1400 }}" itemprop="contentUrl" data-size="1400x1400"
                 class="product__photo-wrapper product__photo-wrapper-{{ section.id }} {{ image_size }} "
@@ -169,6 +182,7 @@
         {% when 'video' %}
                <div  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="photo-image product-single__photo product-single__video product__photo-container product__photo-container-{{ section.id }} " 
                 id="ProductPhoto{{ section.id }}"
+                data-media-color="{{ m_color | escape }}"
                 data-image-id="{{ image.id }}"
                 data-videoid="{{ image.id }}">
                 <a href="{{ media | image_url: width: 1400 }}" itemprop="contentUrl" data-size="1400x1400">
@@ -201,6 +215,7 @@
         {% when 'external_video' %}
               <div itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject"  class="photo-image product-single__photo product-single__video product__photo-container product__photo-container-{{ section.id }} " 
                 id="ProductPhoto{{ section.id }}"
+                data-media-color="{{ m_color | escape }}"
                 data-image-id="{{ image.id }}"
                 data-videoid="{{ image.id }}">
                   <a href="{{ media | image_url: width: 1400 }}" itemprop="contentUrl" data-size="1400x1400">
@@ -238,6 +253,7 @@
         {% when 'model' %}
               <div  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="product-single__photo product-single__video product__photo-container product__photo-container-{{ section.id }} " 
                 id="ProductPhoto{{ section.id }}"
+                data-media-color="{{ m_color | escape }}"
                 data-image-id="{{ image.id }}"
                 data-videoid="{{ image.id }}">
                   <div class="product-media-modal__model" data-media-id="{{ media.id }}">
@@ -284,6 +300,7 @@
               <div  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="product-single__photo product-single__video product__photo-container product__photo-container-{{ section.id }} " 
                 id="ProductPhoto{{ section.id }}"
                 style="max-width: {% render 'image-width' with image: image, width: 480 %}px;"
+                data-media-color="{{ m_color | escape }}"
                 data-image-id="{{ image.id }}"
                 data-videoid="{{ image.id }}">
                 {{ media | media_tag }}
@@ -296,8 +313,11 @@
     <div class="photos__item photos__item--thumbs {{ layout_mobile }}">
       <div class="product-single__thumbnails product-single__thumbnails-{{ section.id }} product-single__thumbnails--static">
         {%- for media in product.media -%}
-        {% assign image = media %}
-        <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
+        {%- assign image = media -%}
+        {%- capture m_color -%}{%- render 'media-color-tag', media: media, product: product -%}{%- endcapture -%}
+        {%- assign m_color = m_color | strip -%}
+        <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}"
+          data-media-color="{{ m_color | escape }}"
           data-image-id="{{ image.id }}">
           <a href="{{ media | image_url: width: 1200 }}"  class="product-single__thumbnail product-single__thumbnail-{{ section.id }}"
             {% if media.media_type == 'video' %}
@@ -354,4 +374,5 @@
       }
     </script>
     {%- endif -%}
+    {{ 'variant-media-filter.js' | asset_url | script_tag }}
   </div>
