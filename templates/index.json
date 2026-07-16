@@ -73,7 +73,7 @@
       "settings": {
         "setwidth": "full",
         "radius": 20,
-        "height": "80vh",
+        "height": "100vh",
         "height_mobile": "70vh",
         "autoplay": 6,
         "overlay_color": "#0b17b8",
