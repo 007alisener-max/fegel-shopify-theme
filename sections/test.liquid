@@ -35,6 +35,9 @@
     position: relative; overflow: hidden; display: block;
     border-radius: {{ section.settings.radius }}px;
     isolation: isolate;
+    /* Kart masaustu boyutunu asmasin => az sutunlu (tablet/mobil) cozunurluklerde
+       buyuyup ekrani kaplamasin; her cozunurlukte ayni alani kaplar. */
+    width: 100%; max-width: 420px; margin-inline: auto;
     {% if section.settings.ratio != 'auto' %} aspect-ratio: {{ section.settings.ratio }}; {% endif %}
   }
   .pb-{{ uid }} .pb-card img {
