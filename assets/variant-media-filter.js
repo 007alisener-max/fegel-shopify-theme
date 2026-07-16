@@ -101,6 +101,14 @@
       $wrapper.slick('slickFilter', function () {
         return self.matches($(this));
       });
+      // slickFilter data-slick-index'leri yeniden numaralandirmiyor: gizlenen
+      // slaytlar cikinca geride 0,1,2,3,7,8 gibi bosluklu indeksler kaliyor.
+      // Hem slick'in kendi selectHandler'i hem temanin setActiveThumbnail'i bu
+      // attribute'u okuyup slickGoTo cagirdigi icin, slideCount'tan buyuk indeksli
+      // kucuk resimler tiklandiginda hicbir sey olmuyordu. Sirayla yeniden yaz.
+      $wrapper.find(itemSelector).each(function (i) {
+        $(this).attr('data-slick-index', i);
+      });
       $wrapper.slick('setPosition');
     } else {
       $items.each(function () {

@@ -1,19 +1,19 @@
 # Fegel — Shopify Tema Projesi (CLAUDE.md)
 
 Bu dosyayı her oturumda oku. Mağaza: **b1y1vw-hn.myshopify.com** — "Fegel - Innovation & Comfort".
-Üzerinde çalıştığımız tema: **test** (id #145520001178, *unpublished* — çalışma teması).
+Üzerinde çalıştığımız tema: **test** (id #145520001178) — **CANLI**.
 
-> **GÜNCEL DURUM (2026-07-16, güncellendi): `test` tekrar UNPUBLISHED, canlı tema yine `Fegel_Yeni`.**
-> Kullanıcı 2026-07-16'da test'i kısa süre canlıya aldı, sonra geri **Fegel_Yeni**'yi (#145297768602)
-> canlı yaptı; **test** (#145520001178) tekrar *unpublished* çalışma teması. **Horizon** unpublished.
-> **Canlı `Fegel_Yeni`'ye DOKUNMA.** Tüm iş `test` üzerinde yapılır.
+> **GÜNCEL DURUM (2026-07-16, güncellendi): `test` (#145520001178) YAYINDA/CANLI.**
+> Kullanıcı test'i canlıya aldı. **Fegel_Yeni** (#145297768602) ve **Horizon** artık *unpublished*.
+> Yani `test`'e yapılan her push **doğrudan müşterinin gördüğü siteye** gider — dikkatli ol.
 > Mağaza şifre korumalı ("yakında" sayfası) — dışarı paylaşım için admin'den "Önizlemeyi paylaş".
 
 ## ÇALIŞMA KURALI
 - `shopify theme push` YAPMA. Değişiklikleri **yerelde** yap, **dev önizlemede** (`shopify theme dev`) test et.
 - Yayınlamadan önce ne değiştiğini özetle ve kullanıcının onayını bekle. Kullanıcı **"pushla" deyince** push et.
 - Push hedefi HER ZAMAN `test` (#145520001178): `shopify theme push ... --theme 145520001178 --only <dosya>`.
-  Canlı `Fegel_Yeni`'ye ASLA push etme.
+  **`test` artık canlı olduğu icin `--allow-live` gerekiyor** ve her push canlıyı etkiler.
+- Unpublished `Fegel_Yeni` / `Horizon`'a dokunma.
 - Not: ürün görselleri mağaza-seviyesi (REST API) → tüm temaları/storefront'u anında etkiler (tema seçiminden bağımsız).
 - Türkçe konuş.
 
