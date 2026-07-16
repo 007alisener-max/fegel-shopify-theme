@@ -33,6 +33,10 @@
     this.selected = norm(this.$root.attr('data-vmf-selected'))
       .split('|')
       .filter(Boolean);
+    // Ilk yuklemede secili renge ait ilk gorsele gideriz; sonraki gecislerde
+    // variantChange bize varyantin one cikan medyasini verir.
+    this.featuredMediaId = null;
+    this._syncTimers = [];
 
     this.bindEvents();
     this.apply();
@@ -78,6 +82,12 @@
     var $items = $wrapper.find(itemSelector);
     if (!$items.length) return;
 
+    // Globo swatch uygulamasi galeriyi SIRAYA gore grupluyor (bir varyanta atali
+    // gorselden sonraki tum gorseller, bir sonraki atali gorsele kadar o varyanta
+    // ait sayiliyor). Tek baglayici alt metin olsun diye sinifini temizliyoruz;
+    // CSS override'i da yedek olarak duruyor.
+    $items.removeClass('globo-sw-media--hide');
+
     var matched = $items.filter(function () {
       return self.matches($(this));
     }).length;
@@ -103,23 +113,50 @@
     this.filterWrapper(this.$main, '.product-single__photo');
     this.filterWrapper(this.$thumbs, '.product-single__thumbnail-item');
     this.syncActive();
+
+    // Tema variantChange'de kendi gorsel gecisini yapiyor ve bu bizim
+    // hizalamamizdan SONRA bitebiliyor (slick init + ~600ms gecis animasyonu).
+    // Ana gorselin etiketsiz bir slaytta kalmamasi icin sonradan tekrar hizala.
+    var self = this;
+    this._syncTimers.forEach(clearTimeout);
+    this._syncTimers = [250, 700].map(function (ms) {
+      return setTimeout(function () {
+        self.syncActive();
+      }, ms);
+    });
   };
 
   /**
    * Filtre sonrasi indeksler degistigi icin aktif slayti yeniden hizala.
-   * Varyantin kendi one cikan gorseli filtrelenmis listede varsa ona,
-   * yoksa ilk gorsele git.
+   *
+   * Baglayici tek kaynak alt metin oldugu icin, Shopify'in varyanta atadigi
+   * one cikan gorsel ancak alt metni de secili renkle eslesiyorsa dikkate
+   * alinir. Uyusmuyorsa (orn. varyanta etiketsiz bir gorsel atanmissa) o rengin
+   * ilk gorseline gideriz.
    */
   VariantMediaFilter.prototype.syncActive = function () {
+    var self = this;
     var target = this.featuredMediaId;
-    var index = 0;
+    var index = -1;
+    var $visible = this.$main.find('.product-single__photo');
 
     if (target != null) {
-      var $visible = this.$main.find('.product-single__photo');
       $visible.each(function (i) {
-        if (String($(this).attr('data-image-id')) === String(target)) index = i;
+        if (String($(this).attr('data-image-id')) !== String(target)) return;
+        var color = norm($(this).attr('data-media-color'));
+        if (color && self.selected.indexOf(color) !== -1) index = i;
       });
     }
+
+    if (index === -1) {
+      $visible.each(function (i) {
+        if (index !== -1) return;
+        var color = norm($(this).attr('data-media-color'));
+        if (color && self.selected.indexOf(color) !== -1) index = i;
+      });
+    }
+
+    if (index === -1) index = 0;
 
     if (this.$main.hasClass('slick-initialized')) {
       this.$main.slick('slickGoTo', index, true);
