@@ -20,7 +20,7 @@
   .ps-{{ uid }} .ps-frame {
     position: relative; overflow: hidden;
     width: 100%;
-    aspect-ratio: 20 / 9;
+    aspect-ratio: 20 / 8;
     max-height: {{ section.settings.height }};
     min-height: 420px;
     {% if section.settings.setwidth == 'container' %}
@@ -224,7 +224,7 @@
               <div class="ps-el"><span class="ps-sub">{{ block.settings.subtitle }}</span></div>
             {%- endif -%}
             {%- if block.settings.title != blank -%}
-              <h2 class="ps-el ps-title">{{ block.settings.title }}</h2>
+              <h2 class="ps-el ps-title">{{ block.settings.title | newline_to_br }}</h2>
             {%- endif -%}
             {%- if block.settings.description != blank -%}
               <div class="ps-el ps-desc">{{ block.settings.description }}</div>
@@ -378,7 +378,7 @@
         { "type": "text", "id": "image_asset", "label": "Tema asset görseli (opsiyonel)", "info": "assets/ içindeki dosya adı. Girilirse üstteki Görsel'in yerine kullanılır." },
         { "type": "text", "id": "image_asset_mobile", "label": "Tema asset mobil görsel (opsiyonel)", "info": "assets/ içindeki mobil dosya adı." },
         { "type": "text", "id": "subtitle", "label": "Alt Başlık", "default": "Yeni Sezon" },
-        { "type": "text", "id": "title", "label": "Başlık", "default": "Slayt Başlığı" },
+        { "type": "textarea", "id": "title", "label": "Başlık", "info": "Alt satıra geçmek için Enter'a bas (her satır ayrı görünür).", "default": "Slayt Başlığı" },
         { "type": "textarea", "id": "description", "label": "Açıklama" },
         { "type": "text", "id": "button_text", "label": "Buton Metni", "default": "Keşfet" },
         { "type": "url", "id": "button_link", "label": "Buton Linki" },

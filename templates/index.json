@@ -12,6 +12,22 @@
     "test2_nCBjaa": {
       "type": "test2",
       "blocks": {
+        "slide_qEiVBe": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Hava-Temizleyici-Banner-2400x1080.png",
+            "image_mobile": "shopify://shop_images/Hava-Temizleyici-Banner-2400x1080.png",
+            "image_asset": "hava-temizleyici-banner.png",
+            "image_asset_mobile": "",
+            "subtitle": "FEGEL COMFORT",
+            "title": "Evinde\nHer Nefes\nTertemiz",
+            "description": "H13 HEPA filtresiyle toz, polen ve alerjenlere son. Fegel hava temizleyicilerle daha sağlıklı bir ev.",
+            "button_text": "HEMEN KEŞFET",
+            "button_link": "shopify://collections/hava-temizleyici",
+            "text_color": "#ffffff",
+            "horizontal": "left"
+          }
+        },
         "slide_TTPhqN": {
           "type": "slide",
           "settings": {
@@ -23,22 +39,6 @@
             "description": "Sessiz motor, katlanabilir tasarım. Fegel koşu bantlarıyla evinde formda kal.",
             "button_text": "HEMEN KEŞFET",
             "button_link": "shopify://collections/kosu-bandi",
-            "text_color": "#ffffff",
-            "horizontal": "left"
-          }
-        },
-        "slide_qEiVBe": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Hava-Temizleyici-Banner-2400x1080.png",
-            "image_mobile": "shopify://shop_images/Hava-Temizleyici-Banner-2400x1080.png",
-            "image_asset": "hava-temizleyici-banner.png",
-            "image_asset_mobile": "",
-            "subtitle": "FEGEL COMFORT",
-            "title": "Evinde Her Nefes Tertemiz",
-            "description": "H13 HEPA filtresiyle toz, polen ve alerjenlere son. Fegel hava temizleyicilerle daha sağlıklı bir ev.",
-            "button_text": "HEMEN KEŞFET",
-            "button_link": "shopify://collections/hava-temizleyici",
             "text_color": "#ffffff",
             "horizontal": "left"
           }
@@ -60,8 +60,8 @@
         }
       },
       "block_order": [
-        "slide_TTPhqN",
         "slide_qEiVBe",
+        "slide_TTPhqN",
         "slide_tg47Vn"
       ],
       "custom_css": [
@@ -73,7 +73,7 @@
       "settings": {
         "setwidth": "full",
         "radius": 20,
-        "height": "100vh",
+        "height": "80vh",
         "height_mobile": "70vh",
         "autoplay": 6,
         "overlay_color": "#0b17b8",
