@@ -88,6 +88,42 @@
     margin-left: 10px;
   }
 
+  /* PDP aksiyon butonlari: Sepete Ekle + Hemen Satin Al yan yana ve daha kompakt */
+  .product-form__quantity-submit.pdp-actions {
+    display: block;
+  }
+  .pdp-actions .product-form__item--quantity {
+    width: 130px;
+    margin-bottom: 12px;
+  }
+  .pdp-actions .pdp-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+  }
+  .pdp-actions .pdp-buttons .product-form__item--submit,
+  .pdp-actions .pdp-buttons .product-form__buynow,
+  .pdp-actions .pdp-buttons .buy-now {
+    flex: 1 1 0;
+    min-width: 140px;
+    margin: 0 !important;
+  }
+  .pdp-actions .pdp-buttons .shopify-payment-button {
+    width: 100%;
+  }
+  .pdp-actions .pdp-buttons .btn,
+  .pdp-actions .pdp-buttons .shopify-payment-button__button {
+    padding-top: 13px !important;
+    padding-bottom: 13px !important;
+    font-size: 13px !important;
+    min-height: 0 !important;
+    height: auto !important;
+    line-height: 1.2 !important;
+  }
+
   .selector-wrapper {
     margin: 0 0 1.2rem;
   }
@@ -249,6 +285,17 @@
     width: 100%;
     height:100%;
     object-fit:cover;
+  }
+  /* Urun detay galerisi: gorseli kirpmadan, cerceveye sigacak sekilde goster.
+     contain => 1200x1800 (2:3) gorselin tamami gorunur; portrait cerceve (%120)
+     ekrana sigar, thumbnail'lar erisilebilir kalir. */
+  .my-gallery .product__photo-wrapper.portrait,
+  .my-gallery .product__photo-wrapper.square{
+    padding-top:120% !important;
+  }
+  .my-gallery .product__photo-wrapper.portrait img,
+  .my-gallery .product__photo-wrapper.square img{
+    object-fit:contain !important;
   }
   .portrait video,.portrait iframe,.square video,.square iframe{
     object-fit: cover;

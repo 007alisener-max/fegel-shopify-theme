@@ -345,12 +345,12 @@
                     </div>
                   </span>
                   {%- endif -%}
-                <div class="product-form__quantity-submit pt-1 flex-column">
-                  <div class="d-flex flex-row w-100 mb-3">
+                <div class="product-form__quantity-submit pt-1 pdp-actions">
                     <div class="product-form__item product-form__item--quantity">
                       <label class="hide" for="Quantity">{{ 'products.product.quantity' | t }}</label>
                       <input type="number" id="Quantity" name="quantity" value="1" min="1" class="product-form__input product-form__quantity">
                     </div>
+                  <div class="pdp-buttons">
                     <div class="product-form__item product-form__item--submit {% unless block.settings.enable_payment_button %} btn-disablebuynow {% endunless %}">
                       <button type="submit"
                               name="add"
@@ -367,7 +367,6 @@
                         </span>
                       </button>
                     </div>
-                </div>
                   {% if block.settings.enable_payment_button %}
                     
                     {% comment %} <div class="product-form__buynow w-100">
@@ -399,6 +398,7 @@
                   {%- endif -%}
                   {% endif %}
                   </div>
+                </div>
                 {%- if block.settings.waitlist -%}
                 <div class="js-contact-soldout {% if current_variant.available %}hide{% endif %}">
                   <span class="btn btn-waitlist btn-theme" data-toggle="modal" data-target="#jsSoldout" title="{{ 'products.product.soldout_messenger' | t }}">{{ 'products.product.waitlist' | t }}</span>
