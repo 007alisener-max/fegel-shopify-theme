@@ -141,7 +141,6 @@
       transform: scaleX(1);
     {% endif %}
   }
-  .ps-{{ uid }} .ps-frame:hover .ps-dot.is-active::after { animation-play-state: paused; }
   @keyframes psFill-{{ uid }} { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
   @media (max-width: 749px) {
@@ -303,8 +302,7 @@
     root.querySelector('.ps-next').addEventListener('click', function () { go(index + 1); });
     dots.forEach(function (d, k) { d.addEventListener('click', function () { go(k); }); });
 
-    root.addEventListener('mouseenter', function () { clearInterval(timer); });
-    root.addEventListener('mouseleave', restart);
+    // Fare uzerindeyken de otomatik gecis devam etsin (bilerek duraklatmiyoruz).
 
     var startX = null;
     root.addEventListener('pointerdown', function (e) { startX = e.clientX; });
