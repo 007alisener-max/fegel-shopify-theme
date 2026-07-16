@@ -104,11 +104,17 @@
     gap: 10px;
     width: 100%;
   }
+  /* min-width, "Hemen satın alın" metninin kirpilmadan sigdigi en kucuk genislik.
+     Altina dusuldugunde flex-wrap devreye girip butonlar alt alta geciyor ve her
+     biri tam genislik oluyor. 140px'ken mobilde iki buton 170px'e sikisiyor,
+     metin ise 235px istiyordu => yazi kesiliyordu.
+     Ekran degil KAPSAYICI genisligine tepki verdigi icin dar masaustu
+     pencerelerinde / dar urun sutununda da dogru davranir. */
   .pdp-actions .pdp-buttons .product-form__item--submit,
   .pdp-actions .pdp-buttons .product-form__buynow,
   .pdp-actions .pdp-buttons .buy-now {
-    flex: 1 1 0;
-    min-width: 140px;
+    flex: 1 1 240px;
+    min-width: 240px;
     margin: 0 !important;
   }
   .pdp-actions .pdp-buttons .shopify-payment-button {
