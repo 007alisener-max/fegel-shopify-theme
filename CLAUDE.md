@@ -1,21 +1,20 @@
 # Fegel — Shopify Tema Projesi (CLAUDE.md)
 
 Bu dosyayı her oturumda oku. Mağaza: **b1y1vw-hn.myshopify.com** — "Fegel - Innovation & Comfort".
-Üzerinde çalıştığımız tema: **test** (id #145520001178).
+Üzerinde çalıştığımız tema: **test** (id #145520001178, *unpublished* — çalışma teması).
 
-> **DURUM DEĞİŞİKLİĞİ (2026-07-16): `test` teması artık CANLI (`[live]`).**
-> Kullanıcı test temasını yayına aldı (herkes kontrol edebilsin diye). Eski canlı tema
-> **Fegel_Yeni** (#145297768602) ve **Horizon** artık *unpublished*.
-> Mağaza şu an **şifre korumalı** ("yakında" sayfası açık) — dışarıya paylaşım için admin'den
-> "Önizlemeyi paylaş" (Share preview) linki kullanılır; düz `?preview_theme_id=` linki şifre ister.
+> **GÜNCEL DURUM (2026-07-16, güncellendi): `test` tekrar UNPUBLISHED, canlı tema yine `Fegel_Yeni`.**
+> Kullanıcı 2026-07-16'da test'i kısa süre canlıya aldı, sonra geri **Fegel_Yeni**'yi (#145297768602)
+> canlı yaptı; **test** (#145520001178) tekrar *unpublished* çalışma teması. **Horizon** unpublished.
+> **Canlı `Fegel_Yeni`'ye DOKUNMA.** Tüm iş `test` üzerinde yapılır.
+> Mağaza şifre korumalı ("yakında" sayfası) — dışarı paylaşım için admin'den "Önizlemeyi paylaş".
 
 ## ÇALIŞMA KURALI
-- **`test` artık canlı**: her push doğrudan yayına gider. Kendiliğinden push YAPMA.
-- Hiçbir değişikliği yayınlamadan önce ne değiştiğini özetle ve kullanıcının onayını bekle.
-- Onay sonrası canlıya push: `shopify theme push ... --theme 145520001178 --allow-live`
-  (canlı tema olduğu için `--allow-live` şart; ayrıca `--only <dosya>` ile sadece değişeni gönder).
-- Değişiklikleri yerelde yapıp **dev önizlemede** (`shopify theme dev`) test et; onay alınca canlıya push et.
-- Not: ürün görselleri mağaza-seviyesi (REST API) → tüm temaları/storefront'u anında etkiler.
+- `shopify theme push` YAPMA. Değişiklikleri **yerelde** yap, **dev önizlemede** (`shopify theme dev`) test et.
+- Yayınlamadan önce ne değiştiğini özetle ve kullanıcının onayını bekle. Kullanıcı **"pushla" deyince** push et.
+- Push hedefi HER ZAMAN `test` (#145520001178): `shopify theme push ... --theme 145520001178 --only <dosya>`.
+  Canlı `Fegel_Yeni`'ye ASLA push etme.
+- Not: ürün görselleri mağaza-seviyesi (REST API) → tüm temaları/storefront'u anında etkiler (tema seçiminden bağımsız).
 - Türkçe konuş.
 
 ## PREMIUM SECTION AİLESİ
