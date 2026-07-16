@@ -15,7 +15,7 @@
         "slide_TTPhqN": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Ev_Sporu_Banner_1920x864_v2_82cd39a8-4393-41ed-b1dc-af2e0f5d0325.png",
+            "image": "shopify://shop_images/Kosu-Bandi-Banner-2400x1080.png",
             "image_asset": "kosu-bandi-banner.png",
             "image_asset_mobile": "",
             "subtitle": "FEGEL FITNESS",
@@ -30,7 +30,8 @@
         "slide_qEiVBe": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Fegel_Comfort_Banner_1920x864_a727d865-7226-44b6-92b2-75e771a055a2.png",
+            "image": "shopify://shop_images/Hava-Temizleyici-Banner-2400x1080.png",
+            "image_mobile": "shopify://shop_images/Hava-Temizleyici-Banner-2400x1080.png",
             "image_asset": "hava-temizleyici-banner.png",
             "image_asset_mobile": "",
             "subtitle": "FEGEL COMFORT",
@@ -45,7 +46,7 @@
         "slide_tg47Vn": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Fegel_Comfort_Masaj_Banner_1920x864_d364b371-6fef-498d-8213-0811ae56d69b.jpg",
+            "image": "shopify://shop_images/Masaj-Koltugu-Banner-2400x1080.png",
             "image_asset": "masaj-koltugu-banner.png",
             "image_asset_mobile": "",
             "subtitle": "FEGEL COMFORT",
@@ -142,16 +143,16 @@
         "horizontal": "left",
         "glass": false,
         "kenburns": false,
-        "setwidth": "container",
+        "setwidth": "full",
         "radius": 32,
         "height": "80vh",
         "height_mobile": "55vh",
         "section_bg": "#ffffff",
         "text_color": "#ffffff",
-        "accent_color": "#0B0BB8",
+        "accent_color": "#0b0bb8",
         "top_divider": false,
-        "divider_color": "#FFFFFF",
-        "overlay_color": "#FFE100",
+        "divider_color": "#ffffff",
+        "overlay_color": "#ffe100",
         "overlay_opacity": 0.7,
         "padding_top": 60,
         "padding_bottom": 60
@@ -163,7 +164,7 @@
       "settings": {
         "subheading": "Öne Çıkanlar",
         "heading": "Çok Satanlar",
-        "collection": "en-cok-tercih-edilenler",
+        "collection": "tum-urunler",
         "limit": 7,
         "columns": 7,
         "full_width": true,
@@ -188,7 +189,7 @@
         "banner_hQncgA": {
           "type": "banner",
           "settings": {
-            "image": "shopify://shop_images/Adsiz_tasarim_10_715133ad-03be-48bb-8af5-6cd775a0e3c5.png",
+            "image": "shopify://shop_images/buharli.png",
             "subtitle": "Öne Çıkan",
             "title": "Buharlı Temizleyiciler",
             "description": "",
@@ -203,7 +204,7 @@
         "banner_zQGHrw": {
           "type": "banner",
           "settings": {
-            "image": "shopify://shop_images/FG-13-1_1.png",
+            "image": "shopify://shop_images/masaj.png",
             "subtitle": "Öne Çıkan",
             "title": "masaj aletleri",
             "description": "",
@@ -218,7 +219,7 @@
         "banner_aQYCbE": {
           "type": "banner",
           "settings": {
-            "image": "shopify://shop_images/FG-13-1_3.png",
+            "image": "shopify://shop_images/fan.png",
             "subtitle": "Öne Çıkan",
             "title": "Spor & Fitness",
             "description": "",

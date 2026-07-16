@@ -35,7 +35,6 @@
         "a00daf6f-fb1c-4351-80dc-24e405bf630e",
         "afb084a9-2a31-4207-9d23-694c0f6b1281"
       ],
-      "disabled": false,
       "settings": {
         "enable": true,
         "animation": "fade",
@@ -128,6 +127,7 @@
         "logo": "shopify://shop_images/Fegel_Logo.avif",
         "logo_width": 220,
         "menu": "main-menu",
+        "hidden_titles": "PROJE, BAYİ TALEP FORMU",
         "ghost": false,
         "hide_on_scroll": false,
         "show_search": true,
@@ -135,8 +135,7 @@
         "bg_color": "#ffffff",
         "text_color": "#141414",
         "text_color_ghost": "#ffffff",
-        "accent_color": "#b8860b",
-        "hidden_titles": "PROJE, BAYİ TALEP FORMU"
+        "accent_color": "#b8860b"
       }
     }
   },
