@@ -50,7 +50,7 @@
   }
 
   /* --- Kart --- */
-  .pp-{{ uid }} .pp-card { text-decoration: none; display: block; }
+  .pp-{{ uid }} .pp-card { text-decoration: none; display: flex; flex-direction: column; height: 100%; }
   .pp-{{ uid }} .pp-media {
     position: relative; overflow: hidden; isolation: isolate;
     border-radius: {{ section.settings.radius }}px;
@@ -75,7 +75,9 @@
   }
   .pp-{{ uid }} .pp-badge.soldout { background: #3a3a3a; }
 
-  .pp-{{ uid }} .pp-info { text-align: {{ section.settings.text_align }}; }
+  .pp-{{ uid }} .pp-info { text-align: {{ section.settings.text_align }}; display: flex; flex-direction: column; flex: 1 1 auto; }
+  /* Fiyat + CTA karti altina sabitle => farkli baslik uzunluklarinda fiyatlar hizali kalir */
+  .pp-{{ uid }} .pp-price { margin-top: auto; }
   .pp-{{ uid }} .pp-vendor {
     font-size: 11px; letter-spacing: .22em; text-transform: uppercase; font-weight: 600;
     color: var(--pp-accent); margin-bottom: 6px;
