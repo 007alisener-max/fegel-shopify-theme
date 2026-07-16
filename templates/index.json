@@ -16,7 +16,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Hava-Temizleyici-Banner-2400x1080.png",
-            "image_mobile": "shopify://shop_images/Hava-Temizleyici-Banner-2400x1080.png",
+            "image_mobile": "shopify://shop_images/Hava-Temizleyici-Banner-1440x1800.png",
             "image_asset": "hava-temizleyici-banner.png",
             "image_asset_mobile": "",
             "subtitle": "FEGEL COMFORT",
@@ -33,6 +33,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Kosu-Bandi-Banner-2400x1080.png",
+            "image_mobile": "shopify://shop_images/Kosu-Bandi-Banner-1440x1800.png",
             "image_asset": "kosu-bandi-banner.png",
             "image_asset_mobile": "",
             "subtitle": "FEGEL FITNESS",
@@ -49,6 +50,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Masaj-Koltugu-Banner-2400x1080.png",
+            "image_mobile": "shopify://shop_images/Masaj-Koltugu-Banner-1440x1800.png",
             "image_asset": "masaj-koltugu-banner.png",
             "image_asset_mobile": "",
             "subtitle": "FEGEL COMFORT",

@@ -144,8 +144,29 @@
   @keyframes psFill-{{ uid }} { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
   @media (max-width: 749px) {
-    .ps-{{ uid }} .ps-frame { height: {{ section.settings.height_mobile }}; min-height: 380px; }
-    .ps-{{ uid }} .ps-content { padding: 0 24px 110px; }
+    /* Mobil banner'lar 1440x1800 (4:5). Cerceveyi ayni orana kilitliyoruz ki
+       gorsel kirpilmasin (masaustundeki 20:6 mantiginin aynisi). height/min-height
+       aspect-ratio'yu ezdigi icin ikisini de sifirliyoruz. */
+    .ps-{{ uid }} .ps-frame {
+      aspect-ratio: 4 / 5;
+      height: auto;
+      min-height: 0;
+      max-height: none;
+    }
+    /* Mobil banner'larda ust ~%49 renkli alan, alt yari urun gorseli.
+       Yazilari renkli alana sigdiriyoruz: uste hizala + tipografiyi sikilastir.
+       Aciklama paragrafi bu yukseklige sigmadigi icin mobilde gizli. */
+    .ps-{{ uid }} .ps-content { align-items: flex-start; padding: 6% 24px 0; }
+    .ps-{{ uid }} .ps-sub { font-size: 11px; letter-spacing: .25em; margin-bottom: 10px; }
+    .ps-{{ uid }} .ps-sub::before { width: 28px; }
+    /* Baslik ekranla birlikte kucululsun: 3 satirlik baslik dar telefonlarda
+       sabit 28px'te renkli alanin sinirina dayaniyordu. */
+    /* text-wrap: balance satirlari esit uzunluga yaklastirir; "Sifir Yerçekimi, Tam /
+       Rahatlama" yerine "Sifir Yerçekimi, / Tam Rahatlama" gibi dogru kirilir.
+       Baslikta elle <br> varsa (Enter'la girilmisse) ona dokunmaz. */
+    .ps-{{ uid }} .ps-title { font-size: clamp(23px, 7vw, 28px) !important; line-height: 1.15 !important; margin: 0 0 14px !important; text-wrap: balance; }
+    .ps-{{ uid }} .ps-desc { display: none !important; }
+    .ps-{{ uid }} .ps-btn { font-size: 12px; padding: 13px 26px; }
     .ps-{{ uid }} .ps-nav { right: 24px; bottom: 30px; }
     .ps-{{ uid }} .ps-dots { left: 24px; bottom: 48px; }
     .ps-{{ uid }} .ps-arrow { width: 42px; height: 42px; }
@@ -164,10 +185,16 @@
       >
         {%- if block.settings.image_asset != blank -%}
           <picture>
-            {%- comment -%} Masaüstü: asset banner · Mobil: asset-mobil varsa o, yoksa image_picker görseli (eski hâl) {%- endcomment -%}
+            {%- comment -%}
+              Masaüstü: asset banner.
+              Mobil: önce "Tema asset mobil görsel", yoksa "Mobil Görsel" (image_picker).
+              İkincisi olmadan mobil, aşağıdaki <img>'e yani masaüstü görseline düşüyordu.
+            {%- endcomment -%}
             <source media="(min-width: 750px)" srcset="{{ block.settings.image_asset | asset_url }}">
             {%- if block.settings.image_asset_mobile != blank -%}
               <source media="(max-width: 749px)" srcset="{{ block.settings.image_asset_mobile | asset_url }}">
+            {%- elsif block.settings.image_mobile != blank -%}
+              <source media="(max-width: 749px)" srcset="{{ block.settings.image_mobile | image_url: width: 1440 }}">
             {%- endif -%}
             {%- if block.settings.image != blank -%}
               <img
