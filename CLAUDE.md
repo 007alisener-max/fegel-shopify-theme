@@ -9,11 +9,22 @@ Bu dosyayı her oturumda oku. Mağaza: **b1y1vw-hn.myshopify.com** — "Fegel - 
 > Mağaza şifre korumalı ("yakında" sayfası) — dışarı paylaşım için admin'den "Önizlemeyi paylaş".
 
 ## ÇALIŞMA KURALI
-- `shopify theme push` YAPMA. Değişiklikleri **yerelde** yap, **dev önizlemede** (`shopify theme dev`) test et.
-- Yayınlamadan önce ne değiştiğini özetle ve kullanıcının onayını bekle. Kullanıcı **"pushla" deyince** push et.
-- Push hedefi HER ZAMAN `test` (#145520001178): `shopify theme push ... --theme 145520001178 --only <dosya>`.
-  **`test` artık canlı olduğu icin `--allow-live` gerekiyor** ve her push canlıyı etkiler.
+
+> **ÖNEMLİ — dev sunucusu CANLIYA senkronluyor (kullanıcının bilinçli tercihi).**
+> `shopify theme dev --theme 145520001178` çalışırken **her dosya kaydı anında canlı temaya**
+> gider; push etmeye gerek yoktur, ara/yarım durumlar da canlıda görünür.
+> Kullanıcı bunu 2026-07-16'da bilerek onayladı ("daha iyi oluyordu canlıdan kontrol edebilmek,
+> site çok fazla trafik almıyor zaten"). Yani **tema dosyaları için "pushla" onayı sorma** —
+> zaten yayında. Yine de:
+> - Bir şeyi bozarsan **canlı bozulur**; büyük/riskli değişikliklerde önce ölç, sonra kaydet.
+> - **GitHub commit'i otomatik DEĞİL** — iş bitince mutlaka commit + push yap.
+> - Dev sunucusu kapalıyken yapılan düzenlemeler canlıya gitmez; o durumda
+>   `shopify theme push --theme 145520001178 --allow-live --only <dosya>` gerekir.
+
+- Push hedefi HER ZAMAN `test` (#145520001178). `test` canlı olduğu için `--allow-live` gerekir.
 - Unpublished `Fegel_Yeni` / `Horizon`'a dokunma.
+- Kullanıcı tema editöründe ayar değiştirebiliyor → JSON dosyalarını (index.json vb.)
+  düzenlemeden önce **`shopify theme pull --only <dosya>`** ile çek, yoksa ezersin.
 - Not: ürün görselleri mağaza-seviyesi (REST API) → tüm temaları/storefront'u anında etkiler (tema seçiminden bağımsız).
 - Türkçe konuş.
 
