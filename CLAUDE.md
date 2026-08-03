@@ -91,7 +91,25 @@ Klasik **sabit** header istiyor: premium-header'da **ghost/hayalet mod KAPALI** 
   (1) Slider kenar kırpılması giderildi (aspect-ratio 20/9). (2) Güven şeridi eklendi.
   (3) 18 disabled bölüm silindi. (4) Soldaki Dakaas sosyal bar app embed kapatıldı
   (settings_data.json). (5) Bölüm padding'leri 60px'e normalize edildi. (6) Hero preload.
-- **header-group.json**: sadece `headertestvol2` (Premium Header) aktif; eski `header`,
-  `announcement-bar-slide`, `store-messages` blokları `disabled: true`.
+- **header-group.json**: `headertestvol2` (Premium Header) + `announcement-bar-slide`
+  (duyuru barı) aktif; eski `header` ve `store-messages` blokları `disabled: true`.
+  > Duyuru barı 2026-08-03'te kullanıcı tarafından tema editöründen tekrar AÇILDI.
+  > 3 mesaj dönüyor: (1) "SINIRLI SÜRE BOYUNCA TÜM SİPARİŞLERDE **ÜCRETSİZ KARGO**",
+  > (2) "2 yıl **resmi distribütör garantisi**", (3) "15:00'a kadar verilen siparişler
+  > **aynı gün kargoda**". Metinler `sections/header-group.json` içindeki blok
+  > `settings.code` alanlarında (HTML kabul ediyor).
 - **footer-group.json**: sadece `test7` (Premium Footer) aktif; eski `footer` ve
   `newsletter-footer` blokları `disabled: true`.
+
+## KARGO AYARI (2026-08-03 tespiti)
+- Yurtiçi (Turkey): **0,00 TRY, AKTİF, koşulsuz** → tüm siparişlerde ücretsiz kargo.
+  Duyuru barındaki iddia ile uyumlu. Profil 66 varyantın tamamını kapsıyor.
+- Tarife açıklaması "14:00'a kadar aynı gün" → **15:00 olmalı** (duyuru barı 15:00 diyor).
+  API ile değiştirilemedi: token'da `write_shipping` yok
+  (`deliveryProfileUpdate` → ACCESS_DENIED). Panelden elle düzeltilecek.
+- Uluslararası bölgede (BAE, Avusturya, Avustralya, Kanada, İsviçre, Belçika)
+  **hiç tarife yok** → o ülkelerden ödeme adımı tamamlanamaz.
+
+## TOKEN KAPSAM EKSİKLERİ
+- `read_orders` yok → sipariş/iade sorgulanamıyor.
+- `write_shipping` yok → kargo tarifesi değiştirilemiyor.
