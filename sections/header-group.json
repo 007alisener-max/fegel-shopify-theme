@@ -17,7 +17,7 @@
         "a00daf6f-fb1c-4351-80dc-24e405bf630e": {
           "type": "Item",
           "settings": {
-            "code": "<font size=\"3\">Tüm masaj aletlerinde <b>ücretsiz kargo</b> fırsatı!</font>",
+            "code": "<font size=\"3\">SINIRLI SÜRE BOYUNCA TÜM SİPARİŞLERDE <b>ÜCRETSİZ KARGO</b></font>",
             "button_text": "",
             "button_link": "shopify://collections"
           }
@@ -25,15 +25,24 @@
         "afb084a9-2a31-4207-9d23-694c0f6b1281": {
           "type": "Item",
           "settings": {
-            "code": "<font size=\"3\">Tüm ürünlerde <b>%25'e varan</b> indirim!</font>",
+            "code": "<font size=\"3\">2 yıl <b>resmi distribütör garantisi</b></font>",
             "button_text": "",
             "button_link": "shopify://collections/best-seller"
+          }
+        },
+        "c3e51a72-4d8f-4b16-9a20-7f1c6d0b28e4": {
+          "type": "Item",
+          "settings": {
+            "code": "<font size=\"3\">15:00'a kadar verilen siparişler <b>aynı gün kargoda</b></font>",
+            "button_text": "",
+            "button_link": "shopify://collections"
           }
         }
       },
       "block_order": [
         "a00daf6f-fb1c-4351-80dc-24e405bf630e",
-        "afb084a9-2a31-4207-9d23-694c0f6b1281"
+        "afb084a9-2a31-4207-9d23-694c0f6b1281",
+        "c3e51a72-4d8f-4b16-9a20-7f1c6d0b28e4"
       ],
       "settings": {
         "enable": true,

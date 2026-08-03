@@ -53,6 +53,69 @@
     gap: {{ section.settings.gap }}px;
   }
 
+{%- if section.settings.slider -%}
+  /* --- Kaydiricili vitrin ---
+     Kartlar kenardan kenara kaysin diye pp-inner'in padding'ini negatif margin'le
+     iptal edip ayni degeri iceride geri veriyoruz => ilk kart baslikla hizali baslar,
+     son kart sonuna kadar kayar. Yuzde bazli grid-auto-columns, content box'a gore
+     cozuldugu icin tam "--pp-cols" kart gorunur genislige oturur. */
+  .pp-{{ uid }} .pp-viewport {
+    position: relative;
+    --pp-cols: {{ section.settings.columns }};
+  }
+  .pp-{{ uid }} .pp-grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - (var(--pp-cols) - 1) * {{ section.settings.gap }}px) / var(--pp-cols));
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--pp-pad);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-inline: calc(-1 * var(--pp-pad));
+    padding-inline: var(--pp-pad);
+    padding-bottom: 2px;
+  }
+  .pp-{{ uid }} .pp-grid::-webkit-scrollbar { display: none; }
+  .pp-{{ uid }} .pp-grid > * { scroll-snap-align: start; }
+
+  /* Ok rayi: yuksekligi TAM olarak bir kartin gorsel alani kadar.
+     padding-bottom yuzdesi kendi genisligine gore cozuldugu icin
+     kart genisligi x 3/4 aspect-ratio'yu birebir taklit eder; boylece
+     oklar JS'siz, her cozunurlukte gorselin tam ortasina oturur.
+     (Mutlak konumlu cocugun % referansi rayin PADDING kutusudur.) */
+  .pp-{{ uid }} .pp-rail {
+    position: absolute; left: 0; right: 0; top: 0; height: 0;
+    padding-bottom: calc((100% - (var(--pp-cols) - 1) * {{ section.settings.gap }}px) / var(--pp-cols) * 4 / 3);
+    pointer-events: none; z-index: 3;
+  }
+  .pp-{{ uid }} .pp-arrow {
+    position: absolute; pointer-events: auto;
+    top: 50%; transform: translateY(-50%);
+    width: 46px; height: 46px; border-radius: 999px;
+    display: grid; place-items: center; cursor: pointer;
+    color: {{ section.settings.heading_color }};
+    border: 1px solid {{ section.settings.heading_color }}33;
+    background: rgba(255,255,255,.82);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    box-shadow: 0 6px 22px rgba(0,0,0,.10);
+    transition: background .35s ease, color .35s ease, border-color .35s ease,
+                opacity .35s ease, transform .5s cubic-bezier(.19,1,.22,1);
+  }
+  .pp-{{ uid }} .pp-arrow svg { width: 18px; height: 18px; }
+  .pp-{{ uid }} .pp-arrow:hover {
+    background: var(--pp-accent); color: #fff; border-color: var(--pp-accent);
+  }
+  .pp-{{ uid }} .pp-arrow:focus-visible { outline: 2px solid var(--pp-accent); outline-offset: 3px; }
+  .pp-{{ uid }} .pp-arrow[disabled] { opacity: 0; pointer-events: none; }
+  .pp-{{ uid }} .pp-prev { left: calc(var(--pp-pad) * -1 + 6px); }
+  .pp-{{ uid }} .pp-next { right: calc(var(--pp-pad) * -1 + 6px); }
+  @media (max-width: 989px) {
+    .pp-{{ uid }} .pp-arrow { display: none; }
+  }
+{%- endif -%}
+
   /* --- Kart --- */
   .pp-{{ uid }} .pp-card { text-decoration: none; display: flex; flex-direction: column; height: 100%; }
   .pp-{{ uid }} .pp-media {
@@ -117,11 +180,19 @@
 
   @media (min-width: 990px) and (max-width: 1300px) {
     {%- if section.settings.columns > 4 -%}
+    {%- if section.settings.slider -%}
+    .pp-{{ uid }} .pp-viewport { --pp-cols: 4; }
+    {%- else -%}
     .pp-{{ uid }} .pp-grid { grid-template-columns: repeat(4, 1fr); }
+    {%- endif -%}
     {%- endif -%}
   }
   @media (max-width: 989px) {
+    {%- if section.settings.slider -%}
+    .pp-{{ uid }} .pp-viewport { --pp-cols: 2; }
+    {%- else -%}
     .pp-{{ uid }} .pp-grid { grid-template-columns: repeat(2, 1fr); }
+    {%- endif -%}
   }
   @media (max-width: 749px) {
     .pp-{{ uid }} { padding: {{ section.settings.padding_top | divided_by: 2 }}px 0 {{ section.settings.padding_bottom | divided_by: 2 }}px; }
@@ -180,7 +251,18 @@
       {%- endif -%}
     </div>
 
-    <div class="pp-grid">
+    <div class="pp-viewport"{% if section.settings.slider %} data-pp-slider data-autoplay="{{ section.settings.autoplay }}"{% endif %}>
+    {%- if section.settings.slider -%}
+      <div class="pp-rail">
+        <button class="pp-arrow pp-prev" type="button" aria-label="Önceki ürünler" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <button class="pp-arrow pp-next" type="button" aria-label="Sonraki ürünler">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    {%- endif -%}
+    <div class="pp-grid"{% if section.settings.slider %} tabindex="0" role="region" aria-label="{{ section.settings.heading | escape }} ürün listesi"{% endif %}>
       {%- if coll != blank -%}
         {%- for product in coll.products limit: section.settings.limit -%}
           <a href="{{ product.url }}" class="pp-card">
@@ -255,9 +337,79 @@
         {%- endfor -%}
       {%- endif -%}
     </div>
+    </div>
 
   </div>
 </div>
+
+{%- if section.settings.slider -%}
+<script>
+  (function () {
+    var root = document.querySelector('.pp-{{ uid }} [data-pp-slider]');
+    if (!root || root.dataset.init) return;
+    root.dataset.init = '1';
+
+    var track = root.querySelector('.pp-grid');
+    var prev  = root.querySelector('.pp-prev');
+    var next  = root.querySelector('.pp-next');
+    if (!track) return;
+
+    var azMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function sonaGeldiMi() {
+      return track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+    }
+
+    function durumGuncelle() {
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = sonaGeldiMi();
+    }
+
+    function kaydir(yon) {
+      var kart = track.querySelector('.pp-card');
+      var adim = kart ? kart.getBoundingClientRect().width + {{ section.settings.gap }} : track.clientWidth;
+      /* Gorunen alana tam sigan kart sayisi kadar kaydir. Son kartin sag
+         bosluğu olmadigi icin bolum 3.93 gibi cikar => 0.15 tolerans ekleyip
+         asagi yuvarliyoruz; mobilde (kartlar %60) 1.57 -> 1 kalir. */
+      var n = Math.max(1, Math.floor(track.clientWidth / adim + 0.15));
+      var sayfa = n * adim;
+      track.scrollBy({ left: yon * sayfa, behavior: azMotion ? 'auto' : 'smooth' });
+    }
+
+    if (prev) prev.addEventListener('click', function () { kaydir(-1); durdur(); });
+    if (next) next.addEventListener('click', function () { kaydir(1);  durdur(); });
+    track.addEventListener('scroll', durumGuncelle, { passive: true });
+    window.addEventListener('resize', durumGuncelle);
+
+    /* --- Otomatik kayma (opsiyonel) --- */
+    var sure = parseFloat(root.dataset.autoplay || '0') * 1000;
+    var zaman = null;
+    function durdur() { if (zaman) { clearInterval(zaman); zaman = null; } }
+    function basla() {
+      if (zaman || !sure || azMotion) return;
+      zaman = setInterval(function () {
+        if (document.hidden) return;
+        if (sonaGeldiMi()) {
+          track.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          kaydir(1);
+        }
+      }, sure);
+    }
+    if (sure && !azMotion) {
+      ['mouseenter', 'focusin', 'touchstart'].forEach(function (e) {
+        root.addEventListener(e, durdur, { passive: true });
+      });
+      ['mouseleave', 'focusout'].forEach(function (e) {
+        root.addEventListener(e, basla);
+      });
+      basla();
+    }
+
+    durumGuncelle();
+  })();
+</script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -269,11 +421,22 @@
     { "type": "collection", "id": "collection", "label": "Koleksiyon" },
     {
       "type": "range", "id": "limit", "label": "Gösterilecek Ürün Sayısı",
-      "min": 2, "max": 12, "step": 1, "default": 4
+      "min": 2, "max": 24, "step": 1, "default": 4
     },
     {
       "type": "range", "id": "columns", "label": "Sütun Sayısı (masaüstü)",
       "min": 2, "max": 8, "step": 1, "default": 4
+    },
+    { "type": "header", "content": "Kaydırma" },
+    {
+      "type": "checkbox", "id": "slider", "label": "Kaydırmalı vitrin",
+      "info": "Açıkken ürünler yan yana kayar; oklarla veya sürükleyerek gezilir. Kaymanın görünmesi için ürün sayısı sütun sayısından fazla olmalı.",
+      "default": false
+    },
+    {
+      "type": "range", "id": "autoplay", "label": "Otomatik kayma",
+      "info": "0 = kapalı. Fareyle üzerine gelince durur.",
+      "min": 0, "max": 10, "step": 1, "unit": "sn", "default": 0
     },
     { "type": "checkbox", "id": "full_width", "label": "Tam Genişlik", "default": false },
     {
