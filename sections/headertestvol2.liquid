@@ -58,8 +58,14 @@
   .ph-{{ uid }}.is-scrolled .ph-logo .ph-logo-dark { display: block; }
 
   /* --- Masaüstü menü --- */
-  .ph-{{ uid }} .ph-nav { display: flex; align-items: center; gap: 2px; margin: 0 auto; padding: 0; flex-wrap: nowrap; }
+  .ph-{{ uid }} .ph-nav { display: flex; align-items: center; gap: 4px; margin: 0 auto; padding: 0; flex-wrap: nowrap; }
   .ph-{{ uid }} .ph-nav > li { list-style: none; position: relative; }
+  /* Kategoriler arasi ince dikey ayrac (ilk maddeden once cikmaz) */
+  .ph-{{ uid }} .ph-nav > li + li::before {
+    content: ""; position: absolute; left: -2px; top: 50%;
+    width: 1px; height: 14px; transform: translateY(-50%);
+    background: currentColor; opacity: .18; pointer-events: none;
+  }
   .ph-{{ uid }} .ph-nav a {
     display: flex; align-items: center; gap: 6px;
     padding: 12px 11px;
