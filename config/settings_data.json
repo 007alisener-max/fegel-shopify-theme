@@ -364,7 +364,7 @@
     "list_currencies": "EUR,AUD,GBP,JPY,INR",
     "cookie_enable": true,
     "cookie_message": "This website uses cookies to ensure you get the best experience on our website.",
-    "cookie_url": "shopify://pages/html-template",
+    "cookie_url": "shopify://pages/cerez-politikasi",
     "cookie_url_text": "Learn More",
     "cookie_ok": "Got it!",
     "header": "header-4",
@@ -2358,9 +2358,9 @@
           "cookie_style": "style-2",
           "cookie_background": "#222222",
           "cookie_color": "#ffffff",
-          "cookie_message": "<div class=\"subtop mb-3\">Çerez Politikası </div>\n<b>Fegel Comfort</b>, web sitemizde en iyi deneyimi yaşamanızı sağlamak için çerezler kullanmaktadır.",
+          "cookie_message": "<div class=\"subtop mb-3\">Çerez Politikası </div>\n<b>Fegel Comfort</b>, web sitemizde en iyi deneyimi yaşamanızı sağlamak için çerezler kullanmaktadır.<br>",
           "cookie_url": "shopify://pages/cerez-politikasi",
-          "cookie_url_text": "<br>Çerez Politikasını Okuyun.",
+          "cookie_url_text": "Çerez Politikasını Okuyun.",
           "cookie_ok": "Tümünü Kabul Et",
           "style_btn": "btn-theme"
         }
