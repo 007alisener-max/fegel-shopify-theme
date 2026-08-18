@@ -2354,7 +2354,7 @@
       "cookie-policy": {
         "type": "cookie-policy",
         "settings": {
-          "enable_cookie_policy": true,
+          "enable_cookie_policy": false,
           "cookie_style": "style-2",
           "cookie_background": "#222222",
           "cookie_color": "#ffffff",
