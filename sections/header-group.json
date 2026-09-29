@@ -37,12 +37,30 @@
             "button_text": "",
             "button_link": "shopify://collections"
           }
+        },
+        "taksit12": {
+          "type": "Item",
+          "settings": {
+            "code": "<font size=\"3\">Tüm kredi kartlarına <b>12 taksit</b> imkânı</font>",
+            "button_text": "",
+            "button_link": "shopify://pages/taksit-secenekleri"
+          }
+        },
+        "kapida34": {
+          "type": "Item",
+          "settings": {
+            "code": "<font size=\"3\"><b>TÜM TÜRKİYE</b>'ye <b>KAPIDA ÖDEME</b> imkânı</font>",
+            "button_text": "",
+            "button_link": ""
+          }
         }
       },
       "block_order": [
         "a00daf6f-fb1c-4351-80dc-24e405bf630e",
         "afb084a9-2a31-4207-9d23-694c0f6b1281",
-        "c3e51a72-4d8f-4b16-9a20-7f1c6d0b28e4"
+        "c3e51a72-4d8f-4b16-9a20-7f1c6d0b28e4",
+        "taksit12",
+        "kapida34"
       ],
       "settings": {
         "enable": true,
@@ -144,7 +162,8 @@
         "bg_color": "#ffffff",
         "text_color": "#141414",
         "text_color_ghost": "#ffffff",
-        "accent_color": "#b8860b"
+        "accent_color": "#E90C0C",
+        "cat_icon_color": "#E90C0C"
       }
     }
   },
