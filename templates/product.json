@@ -91,7 +91,7 @@
             "icon_3": "shield",
             "icon_text_3": "2 Yıl Garanti",
             "icon_4": "globe",
-            "icon_text_4": "Vade Farksız 3 Taksit"
+            "icon_text_4": "12 Taksit İmkânı"
           }
         },
         "842b653e-7ccb-4f45-ad7c-8619b58f56ee": {
@@ -253,14 +253,44 @@
             "size_text": "h6",
             "product_limit": 3
           }
+        },
+        "pdp-rating": {
+          "type": "pdp_rating",
+          "settings": {}
+        },
+        "pdp-reviews": {
+          "type": "pdp_reviews",
+          "settings": {
+            "heading": "Müşteri Yorumları",
+            "limit": 3,
+            "clamp": 3
+          }
+        },
+        "taksit_bilgi": {
+          "type": "taksit",
+          "settings": {
+            "oranlar": "2:4.13,3:6.2,6:13.34,9:21.5,12:30.76",
+            "link": "/pages/taksit-secenekleri",
+            "ek_metin": "İstanbul içi kapıda ödeme"
+          }
+        },
+        "yedek_kumanda": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'yedek-kumanda', product: product %}"
+          }
         }
       },
       "block_order": [
         "10baeeb8-3d3b-4115-8375-8a90ab8f58e9",
         "989bce2f-7961-4267-8e6c-40ff4bb0ed64",
+        "pdp-rating",
         "31b79d7e-a35a-4a94-8cb5-8e518bf8fef6",
         "c5c11045-e3b5-47e4-80d1-25e86ec844cc",
+        "taksit_bilgi",
         "8288910a-1ad6-47df-b127-118bc1d2ce24",
+        "yedek_kumanda",
+        "pdp-reviews",
         "tabcustom_hEpyn4",
         "ff32ea77-bcea-43d3-8e38-55894c9d938a",
         "1431e891-e819-4fa1-8416-0cb3956f0e39",
@@ -295,7 +325,7 @@
         "image_size": "portrait",
         "enable_video_looping": true,
         "stock_enable": false,
-        "sizeguide_enable": true,
+        "sizeguide_enable": false,
         "sizeguide_title": "Size Guide",
         "sizeguide_page": "size-guide",
         "crosssell_title": "Cross selling",

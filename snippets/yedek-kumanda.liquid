@@ -1,0 +1,34 @@
+{%- comment -%}
+  Koşu bandı ürün sayfasında uyumlu yedek kumandayı gösterir.
+  Kaynak: product.metafields.custom.yedek_kumanda (product_reference).
+  Kullanım: {% render 'yedek-kumanda', product: product %}
+{%- endcomment -%}
+{%- assign yk = product.metafields.custom.yedek_kumanda.value -%}
+{%- if yk != blank and yk.available -%}
+<style>
+  .ykk {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px; margin: 4px 0 2px;
+    border: 1px solid rgba(127,127,127,.22); border-radius: 10px;
+    color: inherit; text-decoration: none;
+    transition: border-color .15s ease, background-color .15s ease;
+  }
+  .ykk:hover { border-color: rgba(233,12,12,.45); background: rgba(233,12,12,.03); }
+  .ykk:focus-visible { outline: 2px solid #E90C0C; outline-offset: 2px; }
+  .ykk__gorsel { flex: 0 0 auto; width: 48px; height: 48px; object-fit: contain; border-radius: 6px; background: #fff; }
+  .ykk__metin { flex: 1 1 auto; min-width: 0; line-height: 1.35; }
+  .ykk__etiket { display: block; font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; opacity: .65; }
+  .ykk__ad { display: block; font-size: 13.5px; font-weight: 600; }
+  .ykk__fiyat { flex: 0 0 auto; font-size: 13.5px; font-weight: 700; color: #E90C0C; white-space: nowrap; }
+</style>
+<a class="ykk" href="{{ yk.url }}">
+  {%- if yk.featured_image -%}
+    <img class="ykk__gorsel" src="{{ yk.featured_image | image_url: width: 120 }}" alt="{{ yk.title | escape }}" width="48" height="48" loading="lazy">
+  {%- endif -%}
+  <span class="ykk__metin">
+    <span class="ykk__etiket">Yedek parça</span>
+    <span class="ykk__ad">Bu modelin yedek uzaktan kumandası</span>
+  </span>
+  <span class="ykk__fiyat">{{ yk.price | money }}</span>
+</a>
+{%- endif -%}
